@@ -40,6 +40,23 @@ namespace DriveIndexer
             return hash;
         }
 
+        public static void ScanDrive( string driveLetter )
+        {
+            SetupExtensionWhiteList();
+
+            System.IO.DriveInfo di = new System.IO.DriveInfo( driveLetter );
+
+            // Here we skip the drive if it is not ready to be read. This 
+            // is not necessarily the appropriate action in all scenarios. 
+            if (!di.IsReady)
+            {
+                Console.WriteLine("The drive {0} could not be read", di.Name);
+                return;
+            }
+            System.IO.DirectoryInfo rootDir = di.RootDirectory;
+            WalkDirectoryTree(rootDir);
+        }
+
         public static void ScanAll()
         {
             SetupExtensionWhiteList();

@@ -29,7 +29,16 @@ namespace DriveIndexer
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var data = DriveInfoScanner.ScanDrives();
+            var physicalDriveList = DriveInfoScanner.ScanDrives();
+
+            foreach( var drive in physicalDriveList )
+            {
+                foreach ( var logicalDrive in drive.m_drivePartitions )
+                {
+                    FileExplorer.ScanDrive(logicalDrive.Caption);
+                }
+            }
+           
 
             GetAllDiskDrives();
         }

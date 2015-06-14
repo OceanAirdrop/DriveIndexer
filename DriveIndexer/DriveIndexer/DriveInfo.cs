@@ -59,6 +59,8 @@ namespace DriveIndexer
                         //sb.AppendLine(DumpProperties(logicalDiskObject, 2));
                     }
                 }
+
+                driveList.Add(driveData);
             }
 
             //sb.AppendLine();
