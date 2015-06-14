@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DriveData.cs" />
     <Compile Include="DriveInfo.cs" />
     <Compile Include="FileExplorer.cs" />
     <Compile Include="MainForm.cs">

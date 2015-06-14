@@ -29,7 +29,7 @@ namespace DriveIndexer
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DriveInfo.ScanDrives();
+            var data = DriveInfoScanner.ScanDrives();
 
             GetAllDiskDrives();
         }

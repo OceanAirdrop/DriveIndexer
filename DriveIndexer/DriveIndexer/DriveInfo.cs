@@ -7,32 +7,82 @@ using System.Threading.Tasks;
 
 namespace DriveIndexer
 {
-    public static class DriveInfo
+    public static class DriveInfoScanner
     {
         const int IdenentSize = 3;
-        
-        public static void ScanDrives()
+
+        public static List<PhysicalDriveData> ScanDrives()
         {
-            var sb = new StringBuilder();
+            List<PhysicalDriveData> driveList = new List<PhysicalDriveData>();
+
+            //var sb = new StringBuilder();
 
             var diskDriveManagement = new ManagementClass("Win32_DiskDrive");
             var diskDriveInstanceObjectCollection = diskDriveManagement.GetInstances();
 
             foreach (ManagementObject diskDriveInstanceObject in diskDriveInstanceObjectCollection)
             {
-                sb.AppendLine(DumpProperties(diskDriveInstanceObject, 0));
+                PhysicalDriveData driveData = new PhysicalDriveData();
+
+                //sb.AppendLine(DumpProperties(diskDriveInstanceObject, 0));
+
+                driveData.Caption = GetProperty(diskDriveInstanceObject, "Caption");
+                driveData.InterfaceType = GetProperty(diskDriveInstanceObject, "InterfaceType");
+                driveData.Manufacturer = GetProperty(diskDriveInstanceObject, "Manufacturer");
+                driveData.MediaType = GetProperty(diskDriveInstanceObject, "MediaType");
+                driveData.Model = GetProperty(diskDriveInstanceObject, "Model");
+                driveData.Partitions = GetProperty(diskDriveInstanceObject, "Partitions");
+                driveData.SerialNumber = GetProperty(diskDriveInstanceObject, "SerialNumber");
+                driveData.Size = GetProperty(diskDriveInstanceObject, "Size");
+
                 foreach (ManagementObject diskPartitionObject in diskDriveInstanceObject.GetRelated("Win32_DiskPartition"))
                 {
-                    sb.AppendLine(DumpProperties(diskPartitionObject, 1));
+                    //sb.AppendLine(DumpProperties(diskPartitionObject, 1));
+
                     foreach (ManagementBaseObject logicalDiskObject in diskPartitionObject.GetRelated("Win32_LogicalDisk"))
                     {
-                        sb.AppendLine(DumpProperties(logicalDiskObject, 2));
+                        DrivePartitionData partitionData = new DrivePartitionData();
+
+                        partitionData.Caption = GetProperty(logicalDiskObject, "Caption");
+                        partitionData.CreationClassName = GetProperty(logicalDiskObject, "CreationClassName");
+                        partitionData.Description = GetProperty(logicalDiskObject, "Description");
+                        partitionData.DeviceID = GetProperty(logicalDiskObject, "DeviceID");
+                        partitionData.DriveType = GetProperty(logicalDiskObject, "DriveType");
+                        partitionData.FileSystem = GetProperty(logicalDiskObject, "FileSystem");
+                        partitionData.FreeSpace = GetProperty(logicalDiskObject, "FreeSpace");
+                        partitionData.MediaType = GetProperty(logicalDiskObject, "MediaType");
+                        partitionData.Name = GetProperty(logicalDiskObject, "Name");
+                        partitionData.Size = GetProperty(logicalDiskObject, "Size");
+                        partitionData.VolumeSerialNumber = GetProperty(logicalDiskObject, "VolumeSerialNumber");
+
+                        driveData.m_drivePartitions.Add(partitionData);
+                        //sb.AppendLine(DumpProperties(logicalDiskObject, 2));
                     }
                 }
             }
 
-            sb.AppendLine();
-            Console.WriteLine(sb.ToString());
+            //sb.AppendLine();
+            //Console.WriteLine(sb.ToString());
+
+            return driveList;
+        }
+
+        static string GetProperty(ManagementBaseObject managementObject, string property )
+        {
+            string value = "";
+            var properties = managementObject.Properties;
+            foreach (var prop in properties)
+            {
+                if (prop != null && prop.Value != null)
+                {
+                    if (prop.Name == property)
+                    {
+                        value = prop.Value.ToString();
+                        break;
+                    }
+                }
+            }
+            return value;
         }
 
         static String DumpProperties(ManagementBaseObject managementObject, int level)
