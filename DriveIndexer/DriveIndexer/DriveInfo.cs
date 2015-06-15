@@ -35,6 +35,8 @@ namespace DriveIndexer
                 driveData.SerialNumber = GetProperty(diskDriveInstanceObject, "SerialNumber");
                 driveData.Size = GetProperty(diskDriveInstanceObject, "Size");
 
+                //DumpProperties(diskDriveInstanceObject, 0);
+
                 foreach (ManagementObject diskPartitionObject in diskDriveInstanceObject.GetRelated("Win32_DiskPartition"))
                 {
                     //sb.AppendLine(DumpProperties(diskPartitionObject, 1));
