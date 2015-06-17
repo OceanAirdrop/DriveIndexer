@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OceanAirdrop;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,8 @@ namespace DriveIndexer
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LocalSqllite.CreateNewSQLLiteDatabase();    
+
             SetupDataGridView( dataGridViewDrives );
 
             PopulateDriveList();
