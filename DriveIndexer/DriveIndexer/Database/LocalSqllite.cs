@@ -39,6 +39,32 @@ namespace OceanAirdrop
             }
         }
 
+        public static string ExecSQLCommandScalar(string sql)
+        {
+            string retVal = "";
+            try
+            {
+                //SQLiteConnection cnn = new SQLiteConnection(string.Format("Data Source={0};Version=3;", m_dbName));
+                //cnn.Open();
+                //SQLiteCommand mycommand = new SQLiteCommand(cnn);
+                //mycommand.CommandText = sql;
+                //object val = mycommand.ExecuteScalar();
+                //cnn.Close();
+
+                SQLiteCommand command = new SQLiteCommand(sql, m_sqlLiteConnection);
+                var value = command.ExecuteScalar();
+                retVal = value != null ? value.ToString() : "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return retVal;
+        }
+
+
+
         // Creates an empty database file
         public static void CreateNewSQLLiteDatabase()
         {
@@ -80,8 +106,8 @@ namespace OceanAirdrop
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("create table PhysicalDrives ( ");
-                sb.Append("DriveId integer primary key, ");
-                sb.Append("SerialNumber text, ");
+                sb.Append("DriveId integer  primary key autoincrement, ");
+                sb.Append("SerialNumber text unique, ");
                 sb.Append("Manufacturer text, ");
                 sb.Append("MediaType text, ");
                 sb.Append("Model text, ");
@@ -104,8 +130,8 @@ namespace OceanAirdrop
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append("create table DrivePartitions ( ");
-                sb.Append("PartitionId integer primary key, ");
+                sb.Append("create table PhysicalDrivePartitions ( ");
+                sb.Append("PartitionId integer primary key autoincrement, ");
                 sb.Append("DriveId integer, ");
                 sb.Append("VolumeSerialNumber text, ");
                 sb.Append("Name text, ");
@@ -132,7 +158,7 @@ namespace OceanAirdrop
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("create table FileGroup ( ");
-                sb.Append("FileGroupId integer primary key, ");
+                sb.Append("FileGroupId integer primary key autoincrement, ");
                 sb.Append("FileGroupName text); ");                     // Name of Group ( document / Video / Music / Code )
 
                 ExecSQLCommand(sb.ToString());
@@ -149,7 +175,7 @@ namespace OceanAirdrop
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("create table FileType ( ");
-                sb.Append("FileTypeId integer primary key, ");
+                sb.Append("FileTypeId integer primary key autoincrement, ");
                 sb.Append("FileGroupId integer,");                      // Links to FileGroupTable
                 sb.Append("FileType text); ");                          //  .txt / .doc / etc
 
@@ -167,7 +193,7 @@ namespace OceanAirdrop
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("create table FileIndex ( ");
-                sb.Append("FileId integer primary key, ");          // unique! (maybe use a guid?) 
+                sb.Append("FileId integer primary key autoincrement, ");          // unique! (maybe use a guid?) 
                 sb.Append("DriveId integer, ");                     // links to PhysicalDrives table
                 sb.Append("PartitionId  integer, ");                // links to DrivePartitions table
                 
@@ -188,5 +214,6 @@ namespace OceanAirdrop
                 Console.WriteLine(ex.Message);
             }
         }
+
     }
 }

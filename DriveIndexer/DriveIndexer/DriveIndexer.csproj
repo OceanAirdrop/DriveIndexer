@@ -57,10 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DBHelper.cs" />
     <Compile Include="Data\DriveData.cs" />
     <Compile Include="DriveInfo.cs" />
     <Compile Include="FileExplorer.cs" />
-    <Compile Include="LocalSqllite.cs" />
+    <Compile Include="Database\LocalSqllite.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

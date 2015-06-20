@@ -27,8 +27,8 @@ namespace DriveIndexer
 
             SetupDataGridView( dataGridViewDrives );
 
-            PopulateDriveList();
-            PopulateListView(m_physicalDriveList);
+            WriteCurrentDriveListToDatabase();
+            PopulateListView();
         }
 
         public void SetupDataGridView(DataGridView dgv)
@@ -51,27 +51,32 @@ namespace DriveIndexer
 
         private void buttonRefreshDriveInfo_Click(object sender, EventArgs e)
         {
-            PopulateDriveList();
-            PopulateListView(m_physicalDriveList);
+            WriteCurrentDriveListToDatabase();
+            PopulateListView();
         }
 
-        private void PopulateDriveList()
+        private void WriteCurrentDriveListToDatabase()
         {
-            m_physicalDriveList = DriveInfoScanner.ScanDrives();
+            List<PhysicalDriveData> currentDrives = DriveInfoScanner.ScanDrives();
+
+            // Add the current drives to the sqllite database
+            DBHelper.PopulatePhyicalDriveTable(currentDrives);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            PopulateDriveList();
+            WriteCurrentDriveListToDatabase();
 
-            PopulateListView( m_physicalDriveList );
+            PopulateListView();
         }
 
-        private void PopulateListView( List<PhysicalDriveData> driveList )
+        private void PopulateListView( )
         {
+            m_physicalDriveList = DBHelper.ReadDriveList();
+
             dataGridViewDrives.Rows.Clear();
 
-            foreach ( var drive in driveList )
+            foreach (var drive in m_physicalDriveList)
             {
                 AddPhysicialDriveToDataGridView( dataGridViewDrives, drive );
             }
@@ -92,7 +97,7 @@ namespace DriveIndexer
         private void buttonIndexFiles_Click(object sender, EventArgs e)
         {
             if (m_physicalDriveList == null )
-                PopulateDriveList();
+                WriteCurrentDriveListToDatabase();
 
             foreach (var drive in m_physicalDriveList)
             {
