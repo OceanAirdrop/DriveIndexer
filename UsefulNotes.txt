@@ -47,3 +47,9 @@ Its 140 terabytes Maximum
 
 http://stackoverflow.com/questions/2777954/is-there-a-limit-to-the-size-of-a-sqlite-database
 http://stackoverflow.com/questions/8502070/sqlite-database-maximum-storage-capacity
+
+----------------------------------------------------------------
+-- Hashing Large Files
+----------------------------------------------------------------
+
+http://stackoverflow.com/questions/1177607/what-is-the-fastest-way-to-create-a-checksum-for-large-files-in-c-sharp

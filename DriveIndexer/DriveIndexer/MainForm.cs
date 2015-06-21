@@ -114,6 +114,12 @@ namespace DriveIndexer
                 return;
             }
 
+           if ( FileExplorer.CheckIfDriveAvailableToScan(m_dgvSelectedDrive) == false )
+           {
+               MessageBox.Show("The selected drive/usb is not available to scan");
+               return;
+           }
+
             DialogResult dlgRes = MessageBox.Show(string.Format("Are you sure you want to scan the drive: {0}?", m_dgvSelectedDrive.Model), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgRes == DialogResult.No)
             {
@@ -124,6 +130,10 @@ namespace DriveIndexer
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
             {
                 MessageBox.Show("Process was cancelled");
+            }
+            else
+            {
+                MessageBox.Show("Scan completed successfully.");
             }
         }
 

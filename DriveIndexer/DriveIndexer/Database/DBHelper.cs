@@ -194,16 +194,34 @@ namespace DriveIndexer
         private static string CheckFileExists(DrivePartitionData data, System.IO.FileInfo fi)
         {
             string returnVal = "";
-            string sql = string.Format("select FileId from FileIndex where FileName = '{0}' and FilePath = '{1}' and DriveId = '{2}' and PartitionId = '{3}'", fi.Name, fi.DirectoryName, data.PhysicalDrive.DriveId, data.PartitionId );
+
+            string dirName = GetDirectoryName(fi);
+
+            string sql = string.Format("select FileId from FileIndex where FileName = '{0}' and FilePath = '{1}' and DriveId = '{2}' and PartitionId = '{3}'", fi.Name, dirName, data.PhysicalDrive.DriveId, data.PartitionId);
 
             returnVal = LocalSqllite.ExecSQLCommandScalar(sql);
 
             return returnVal;
         }
 
+        private static string GetDirectoryName(System.IO.FileInfo fi)
+        {
+            // Its important that we write every file to the database as if it was on the Z: drive.
+            // This is beacuse the next time we insert the drive/usb stick windows might assign it a new drive letter.
+            // Then when we check to see if we have indexed this file previosuly the lookup wont match because the letter is different.
+            /// This way the base drive letter is always Z:
+            /// 
+            StringBuilder strBuilder = new StringBuilder(fi.DirectoryName);
+            strBuilder[0] = 'Z';
+
+            return strBuilder.ToString();
+        }
+
         public static bool WriteFileToDatabase(DrivePartitionData data, System.IO.FileInfo fi, IFileExplorerUIManager ui)
         {
             bool bSuccessInsert = false;
+
+            string dirName = GetDirectoryName(fi);
 
             StringBuilder sqlStatement = new StringBuilder();
 
@@ -213,7 +231,7 @@ namespace DriveIndexer
                 if (ui != null)
                     ui.OutputFileScanned(string.Format("Hashing File: {0} (Size: {1})", fi.Name, fi.Length));
 
-                string hash = GetFileHash(fi.FullName);
+                string hash = ""; // GetFileHash(fi.FullName);
 
                 // insert statment
                 sqlStatement.AppendLine("INSERT OR IGNORE INTO FileIndex ( DriveId, PartitionId, FileName, FileExtension, FilePath, FileSize, FileTypeId, FileTag, FileHash, UserComment ) VALUES ( ");
@@ -221,7 +239,7 @@ namespace DriveIndexer
                 sqlStatement.AppendLine(string.Format(",'{0}'", data.PartitionId));
                 sqlStatement.AppendLine(string.Format(",'{0}'", fi.Name));
                 sqlStatement.AppendLine(string.Format(",'{0}'", fi.Extension));
-                sqlStatement.AppendLine(string.Format(",'{0}'", fi.DirectoryName));
+                sqlStatement.AppendLine(string.Format(",'{0}'", dirName));
                 sqlStatement.AppendLine(string.Format(",'{0}'", fi.Length));
                 sqlStatement.AppendLine(string.Format(",'{0}'", "unknown type" ));
                 sqlStatement.AppendLine(string.Format(",'{0}'", "unknown tag"));

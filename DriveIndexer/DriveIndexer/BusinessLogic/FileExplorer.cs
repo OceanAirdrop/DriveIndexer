@@ -81,16 +81,71 @@ namespace DriveIndexer
                 m_uiManager.OutputFileScanned(msg);
         }
 
-        private static bool CheckIfDriveAvailableToScan(DrivePartitionData logicalDrive)
+        public static bool CheckIfDriveAvailableToScan(PhysicalDriveData driveSelected)
         {
             bool bDriveAvailable = false;
 
-            string[] availableDriveLabels = System.Environment.GetLogicalDrives();
+            List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
 
-            if (availableDriveLabels.Contains( string.Format(@"{0}\",logicalDrive.Name) ) == true)
-                bDriveAvailable = true;
+            foreach (var drive in driveList)
+            {
+                if (drive.SerialNumber == driveSelected.SerialNumber )
+                {
+                    bDriveAvailable = true;
+                    break;
+                }
+            }
 
             return bDriveAvailable;
+        }
+
+        
+
+        public static bool CheckIfDriveAvailableToScan(DrivePartitionData logicalDrive)
+        {
+            bool bDriveAvailable = false;
+
+            List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
+
+            foreach (var drive in driveList)
+            {
+                foreach ( var drivePartition in drive.m_drivePartitions )
+                {
+                    if ( drivePartition.VolumeSerialNumber == logicalDrive.VolumeSerialNumber )
+                    {
+                        bDriveAvailable = true;
+                        break;
+                    }
+                }
+            }
+
+            //string[] availableDriveLabels = System.Environment.GetLogicalDrives();
+
+            //if (availableDriveLabels.Contains( string.Format(@"{0}\",logicalDrive.Name) ) == true)
+            //    bDriveAvailable = true;
+
+            return bDriveAvailable;
+        }
+
+        public static string GetCurrentDriveLetterForDrive(DrivePartitionData driveInfo )
+        {
+            string currentDriveLetter = "";
+
+            List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
+
+            foreach (var drive in driveList)
+            {
+                foreach (var drivePartition in drive.m_drivePartitions)
+                {
+                    if (drivePartition.VolumeSerialNumber == driveInfo.VolumeSerialNumber)
+                    {
+                        currentDriveLetter = drivePartition.Name;
+                        break;
+                    }
+                }
+            }
+
+            return currentDriveLetter;
         }
 
         private static DrivePartitionData m_logicalDrive = null;
@@ -104,6 +159,8 @@ namespace DriveIndexer
                 OutputMessage(string.Format("Logical Drive: {0} not available to scan", logicalDrive.Name));
                 return;
             }
+
+            logicalDrive.Name = GetCurrentDriveLetterForDrive( logicalDrive );
 
             OutputMessage(string.Format("Starting scan: {0}", logicalDrive.Name));
 

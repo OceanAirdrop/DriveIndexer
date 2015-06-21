@@ -62,6 +62,21 @@ namespace DriveIndexer.Dialogs
             {
                 FileExplorer.ScanDrive(logicalDrive);
             }
+
+            StopBlinkLabel();
+
+            ThreadSafe(delegate
+            {
+                labelScanningFiles.Text = "Finished Scanning Drive!";
+                listBox1.Items.Insert(0, "Finished!");
+            });
+
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            //this.Invoke(new Action(this.buttonOK_Click()));
+
+            //MessageBox.Show("Finished Scan!");
+            //this.Close();
+            
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
