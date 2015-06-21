@@ -103,7 +103,7 @@ namespace DriveIndexer
             {
                 foreach (var logicalDrive in drive.m_drivePartitions)
                 {
-                    FileExplorer.ScanDrive(logicalDrive.Caption);
+                    FileExplorer.ScanDrive(logicalDrive);
                 }
             }
         }

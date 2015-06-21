@@ -24,27 +24,15 @@ namespace DriveIndexer
             m_extensionWhiteList.Add(".h");
         }
 
-        public static string GetFileHash( string fileName )
+        private static DrivePartitionData m_logicalDrive = null;
+
+        public static void ScanDrive(DrivePartitionData logicalDrive)
         {
-            string hash = "";
-            using (var md5 = MD5.Create())
-            {
-                using (var stream = File.OpenRead(fileName))
-                {
-                    var result = md5.ComputeHash(stream);
+            m_logicalDrive = logicalDrive;
 
-                    hash = BitConverter.ToString(result).Replace("-", "").ToLower();
-                }
-            }
-
-            return hash;
-        }
-
-        public static void ScanDrive( string driveLetter )
-        {
             SetupExtensionWhiteList();
 
-            System.IO.DriveInfo di = new System.IO.DriveInfo( driveLetter );
+            System.IO.DriveInfo di = new System.IO.DriveInfo(logicalDrive.Name);
 
             // Here we skip the drive if it is not ready to be read. This 
             // is not necessarily the appropriate action in all scenarios. 
@@ -56,6 +44,23 @@ namespace DriveIndexer
             System.IO.DirectoryInfo rootDir = di.RootDirectory;
             WalkDirectoryTree(rootDir);
         }
+
+        //public static void ScanDrive( string driveLetter )
+        //{
+        //    SetupExtensionWhiteList();
+
+        //    System.IO.DriveInfo di = new System.IO.DriveInfo( driveLetter );
+
+        //    // Here we skip the drive if it is not ready to be read. This 
+        //    // is not necessarily the appropriate action in all scenarios. 
+        //    if (!di.IsReady)
+        //    {
+        //        Console.WriteLine("The drive {0} could not be read", di.Name);
+        //        return;
+        //    }
+        //    System.IO.DirectoryInfo rootDir = di.RootDirectory;
+        //    WalkDirectoryTree(rootDir);
+        //}
 
         public static void ScanAll()
         {
@@ -90,6 +95,13 @@ namespace DriveIndexer
             Console.ReadKey();
         }
 
+        static bool GetExtensionWhiteList( string ext )
+        {
+            //if ( m_extensionWhiteList.Contains( fi.Extension ) == true )
+                   
+            return true;
+        }
+
         static void WalkDirectoryTree(System.IO.DirectoryInfo root)
         {
             System.IO.FileInfo[] files = null;
@@ -122,13 +134,14 @@ namespace DriveIndexer
                     // want to open, delete or modify the file, then 
                     // a try-catch block is required here to handle the case 
                     // where the file has been deleted since the call to TraverseTree().
-                    if ( m_extensionWhiteList.Contains( fi.Extension ) == true )
+                    if ( GetExtensionWhiteList( fi.Extension ) == true )
                     {
                         //Console.WriteLine(fi.FullName);
+                        var x = m_logicalDrive.Name;
 
-                        string hash = GetFileHash(fi.FullName);
+                        DBHelper.WriteFileToDatabase(m_logicalDrive, fi);
 
-                        Console.WriteLine(string.Format("{0}: {1}", hash, fi.FullName));
+                        
                     }
                 }
 

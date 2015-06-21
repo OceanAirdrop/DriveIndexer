@@ -8,7 +8,7 @@ namespace DriveIndexer
 {
     public class PhysicalDriveData
     {
-        public string Id { get; set; }              // id
+        public string DriveId { get; set; }              // id
         public string Caption { get; set; }         // Hitachi HTS725032A9A364
         public string InterfaceType { get; set; }   // IDE
         public string Manufacturer { get; set; }    // (Standard disk drives)
@@ -24,7 +24,7 @@ namespace DriveIndexer
 
     public class DrivePartitionData
     {
-        public string Id { get; set; }                  // id
+        public string PartitionId { get; set; }                  // id
         public string DriveId { get; set; }                  // id
         public string Caption { get; set; }             // C:
         public string CreationClassName { get; set; }   // Win32_LogicalDisk
@@ -38,5 +38,7 @@ namespace DriveIndexer
         public string Size { get; set; }                // 319547240448
         public string VolumeSerialNumber { get; set; }  // D2A94F5F
         public string UserComment { get; set; }     // ?
+
+        public PhysicalDriveData PhysicalDrive { get; set; }
     }
 }

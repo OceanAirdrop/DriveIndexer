@@ -1,0 +1,49 @@
+-----------------------------------------------------------------
+-- SQLLite DB Browser App
+-----------------------------------------------------------------
+
+http://sqlitebrowser.org/
+
+
+-----------------------------------------------------------------
+-- USeful SQL Statements
+-----------------------------------------------------------------
+
+select count(*) from FileIndex
+
+select * from FileIndex where FileExtension = '.cs'
+
+select * from FileIndex where FileExtension = '.png'
+
+select distinct(FileExtension) from FileIndex
+
+SELECT * FROM FileIndex GROUP BY FileHash HAVING count(FileHash) > 1;
+
+SELECT * FROM FileIndex where FileHash = 'd3f55c2b2a1fc3afdbd197aa640371a7'
+
+-- SQLLite Top command
+select  * from FileIndex LIMIT 100
+select  * from FileIndex where FileExtension = '.png' LIMIT 100 
+
+-- Infinity scroll through items, 10 at a time
+select  * from FileIndex where FileExtension = '.cs' LIMIT 10 OFFSET 0
+select  * from FileIndex where FileExtension = '.cs' LIMIT 10 OFFSET 10
+select  * from FileIndex where FileExtension = '.cs' LIMIT 10 OFFSET 20
+select  * from FileIndex where FileExtension = '.cs' LIMIT 10 OFFSET 30 -- etc
+
+----------------------------------------------------------------
+-- List of file formats
+----------------------------------------------------------------
+
+https://en.wikipedia.org/wiki/Video_file_format
+https://en.wikipedia.org/wiki/List_of_file_formats
+
+
+----------------------------------------------------------------
+-- Max Size of SQLLite Database
+----------------------------------------------------------------
+
+Its 140 terabytes Maximum
+
+http://stackoverflow.com/questions/2777954/is-there-a-limit-to-the-size-of-a-sqlite-database
+http://stackoverflow.com/questions/8502070/sqlite-database-maximum-storage-capacity
