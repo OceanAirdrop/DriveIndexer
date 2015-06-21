@@ -1,4 +1,5 @@
-﻿using OceanAirdrop;
+﻿using DriveIndexer.Dialogs;
+using OceanAirdrop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,8 @@ namespace DriveIndexer
     public partial class MainForm : Form
     {
         List<PhysicalDriveData> m_physicalDriveList = null;
+
+        PhysicalDriveData m_dgvSelectedDrive = null;
 
         public MainForm()
         {
@@ -46,7 +49,7 @@ namespace DriveIndexer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FileExplorer.ScanAll();
+            //FileExplorer.ScanAll();
         }
 
         private void buttonRefreshDriveInfo_Click(object sender, EventArgs e)
@@ -79,6 +82,9 @@ namespace DriveIndexer
             foreach (var drive in m_physicalDriveList)
             {
                 AddPhysicialDriveToDataGridView( dataGridViewDrives, drive );
+
+                // set this drive as the selected drive!
+                m_dgvSelectedDrive = drive;
             }
         }
 
@@ -92,6 +98,9 @@ namespace DriveIndexer
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.InterfaceType;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Partitions;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Size;
+
+            // Assosiate driveData with this row.
+            dgv.Rows[nNewRow].Tag = driveData;
         }
 
         private void buttonIndexFiles_Click(object sender, EventArgs e)
@@ -99,13 +108,36 @@ namespace DriveIndexer
             if (m_physicalDriveList == null )
                 WriteCurrentDriveListToDatabase();
 
-            foreach (var drive in m_physicalDriveList)
+            if (m_dgvSelectedDrive == null)
             {
-                foreach (var logicalDrive in drive.m_drivePartitions)
-                {
-                    FileExplorer.ScanDrive(logicalDrive);
-                }
+                MessageBox.Show("Please select a drive from the list");
+                return;
             }
+
+            DialogResult dlgRes = MessageBox.Show(string.Format("Are you sure you want to scan the drive: {0}?", m_dgvSelectedDrive.Model), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dlgRes == DialogResult.No)
+            {
+                return;
+            }
+
+            IndexFilesForm dlg = new IndexFilesForm(m_dgvSelectedDrive);
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            {
+                MessageBox.Show("Process was cancelled");
+            }
+        }
+
+        private void dataGridViewDrives_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridViewDrives_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            m_dgvSelectedDrive = (PhysicalDriveData)dataGridViewDrives.Rows[e.RowIndex].Tag;
         }
 
 

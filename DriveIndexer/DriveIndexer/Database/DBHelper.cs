@@ -201,13 +201,18 @@ namespace DriveIndexer
             return returnVal;
         }
 
-        public static string WriteFileToDatabase(DrivePartitionData data, System.IO.FileInfo fi)
+        public static bool WriteFileToDatabase(DrivePartitionData data, System.IO.FileInfo fi, IFileExplorerUIManager ui)
         {
+            bool bSuccessInsert = false;
+
             StringBuilder sqlStatement = new StringBuilder();
 
             string fileExists = CheckFileExists(data, fi);
             if (fileExists == "")
             {
+                if (ui != null)
+                    ui.OutputFileScanned(string.Format("Hashing File: {0} (Size: {1})", fi.Name, fi.Length));
+
                 string hash = GetFileHash(fi.FullName);
 
                 // insert statment
@@ -224,7 +229,17 @@ namespace DriveIndexer
                 sqlStatement.AppendLine(string.Format(",'{0}'", "user comment"));
                 sqlStatement.AppendLine(");");
 
+                bSuccessInsert = LocalSqllite.ExecSQLCommand(sqlStatement.ToString());
+
                 Console.WriteLine(string.Format("{0}: {1}", hash, fi.FullName));
+                if ( ui != null )
+                    ui.OutputFileScanned(string.Format("Indexing File: {0}", fi.Name));
+            }
+            else
+            {
+                Console.WriteLine(string.Format("Skipping File (Already Indexed): {0}", fi.Name));
+                if ( ui != null )
+                    ui.OutputFileScanned(string.Format("Skipping File (Already Indexed): {0}", fi.FullName));
             }
             //else
             //{
@@ -243,9 +258,7 @@ namespace DriveIndexer
             //    sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", partitionId));
             //}
 
-            LocalSqllite.ExecSQLCommand(sqlStatement.ToString());
-
-            return sqlStatement.ToString();
+            return bSuccessInsert;
         }
 
         public static string GetFileHash(string fileName)

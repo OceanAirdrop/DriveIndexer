@@ -28,29 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewDrives = new System.Windows.Forms.DataGridView();
-            this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
-            this.buttonIndexFiles = new System.Windows.Forms.Button();
             this.DriveSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InterfaceType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Partitions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
+            this.buttonIndexFiles = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDrives)).BeginInit();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(603, 128);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 53);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Test Scan C: Drive";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -78,28 +66,8 @@
             this.dataGridViewDrives.Name = "dataGridViewDrives";
             this.dataGridViewDrives.Size = new System.Drawing.Size(584, 307);
             this.dataGridViewDrives.TabIndex = 4;
-            // 
-            // buttonRefreshDriveInfo
-            // 
-            this.buttonRefreshDriveInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRefreshDriveInfo.Location = new System.Drawing.Point(603, 13);
-            this.buttonRefreshDriveInfo.Name = "buttonRefreshDriveInfo";
-            this.buttonRefreshDriveInfo.Size = new System.Drawing.Size(118, 50);
-            this.buttonRefreshDriveInfo.TabIndex = 5;
-            this.buttonRefreshDriveInfo.Text = "Refresh Drive Info";
-            this.buttonRefreshDriveInfo.UseVisualStyleBackColor = true;
-            this.buttonRefreshDriveInfo.Click += new System.EventHandler(this.buttonRefreshDriveInfo_Click);
-            // 
-            // buttonIndexFiles
-            // 
-            this.buttonIndexFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonIndexFiles.Location = new System.Drawing.Point(603, 69);
-            this.buttonIndexFiles.Name = "buttonIndexFiles";
-            this.buttonIndexFiles.Size = new System.Drawing.Size(118, 53);
-            this.buttonIndexFiles.TabIndex = 6;
-            this.buttonIndexFiles.Text = "Index Files";
-            this.buttonIndexFiles.UseVisualStyleBackColor = true;
-            this.buttonIndexFiles.Click += new System.EventHandler(this.buttonIndexFiles_Click);
+            this.dataGridViewDrives.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellClick);
+            this.dataGridViewDrives.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellDoubleClick);
             // 
             // DriveSerialNum
             // 
@@ -130,6 +98,28 @@
             this.DriveSize.HeaderText = "DriveSize";
             this.DriveSize.Name = "DriveSize";
             // 
+            // buttonRefreshDriveInfo
+            // 
+            this.buttonRefreshDriveInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRefreshDriveInfo.Location = new System.Drawing.Point(603, 13);
+            this.buttonRefreshDriveInfo.Name = "buttonRefreshDriveInfo";
+            this.buttonRefreshDriveInfo.Size = new System.Drawing.Size(118, 50);
+            this.buttonRefreshDriveInfo.TabIndex = 5;
+            this.buttonRefreshDriveInfo.Text = "Refresh Drive Info";
+            this.buttonRefreshDriveInfo.UseVisualStyleBackColor = true;
+            this.buttonRefreshDriveInfo.Click += new System.EventHandler(this.buttonRefreshDriveInfo_Click);
+            // 
+            // buttonIndexFiles
+            // 
+            this.buttonIndexFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonIndexFiles.Location = new System.Drawing.Point(603, 69);
+            this.buttonIndexFiles.Name = "buttonIndexFiles";
+            this.buttonIndexFiles.Size = new System.Drawing.Size(118, 53);
+            this.buttonIndexFiles.TabIndex = 6;
+            this.buttonIndexFiles.Text = "Index Files";
+            this.buttonIndexFiles.UseVisualStyleBackColor = true;
+            this.buttonIndexFiles.Click += new System.EventHandler(this.buttonIndexFiles_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,7 +129,6 @@
             this.Controls.Add(this.buttonRefreshDriveInfo);
             this.Controls.Add(this.dataGridViewDrives);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button1);
             this.Name = "MainForm";
             this.Text = "Drive Indexer - By Ocean Airdrop";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -151,7 +140,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridViewDrives;
         private System.Windows.Forms.Button buttonRefreshDriveInfo;

@@ -57,10 +57,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\IFileExplorerUIManager.cs" />
     <Compile Include="Database\DBHelper.cs" />
     <Compile Include="Data\DriveData.cs" />
-    <Compile Include="DriveInfo.cs" />
-    <Compile Include="FileExplorer.cs" />
+    <Compile Include="Dialogs\FileSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FileSearch.Designer.cs">
+      <DependentUpon>FileSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\IndexFilesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\IndexFilesForm.Designer.cs">
+      <DependentUpon>IndexFilesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessLogic\DriveInfo.cs" />
+    <Compile Include="BusinessLogic\FileExplorer.cs" />
     <Compile Include="Database\LocalSqllite.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -70,6 +83,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\FileSearch.resx">
+      <DependentUpon>FileSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\IndexFilesForm.resx">
+      <DependentUpon>IndexFilesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,6 +100,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -94,6 +114,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\working-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\working-40.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

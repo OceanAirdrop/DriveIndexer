@@ -26,17 +26,22 @@ namespace OceanAirdrop
             }
         }
 
-        public static void ExecSQLCommand(string sql)
+        public static bool ExecSQLCommand(string sql)
         {
+            bool bSuccess = false;
             try
             {
                 SQLiteCommand command = new SQLiteCommand(sql, m_sqlLiteConnection);
                 command.ExecuteNonQuery();
+                bSuccess = true;
             }
             catch (Exception ex)
             {
+                bSuccess = false;
                 Console.WriteLine(ex.Message);
             }
+
+            return bSuccess;
         }
 
         public static string ExecSQLCommandScalar(string sql)
