@@ -60,6 +60,7 @@
     <Compile Include="BusinessLogic\IFileExplorerUIManager.cs" />
     <Compile Include="Database\DBHelper.cs" />
     <Compile Include="Data\DriveData.cs" />
+    <Compile Include="Data\FileData.cs" />
     <Compile Include="Dialogs\DatabaseStastics.cs">
       <SubType>Form</SubType>
     </Compile>

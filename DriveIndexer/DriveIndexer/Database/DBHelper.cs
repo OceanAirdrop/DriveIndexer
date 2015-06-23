@@ -18,7 +18,7 @@ namespace DriveIndexer
 
             try
             {
-                string sql = "select DriveId, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment FROM PhysicalDrives";
+                string sql = "select DriveId, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment, DriveScanned, DriveScannedDate FROM PhysicalDrives";
                 SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -34,6 +34,8 @@ namespace DriveIndexer
                     data.InterfaceType = reader["InterfaceType"].ToString();
                     data.Size = reader["Size"].ToString();
                     data.UserComment = reader["UserComment"].ToString();
+                    data.DriveScanned = reader["DriveScanned"].ToString();
+                    data.DriveScannedDate = reader["DriveScannedDate"].ToString();
 
                     data.m_drivePartitions = ReadDrivePartitionList(data);
                     list.Add(data);
@@ -233,7 +235,7 @@ namespace DriveIndexer
 
             string dirName = GetDirectoryName(fi);
 
-            string sql = string.Format("select FileId from FileIndex where FileName = '{0}' and FilePath = '{1}' and DriveId = '{2}' and PartitionId = '{3}'", fi.Name.Replace("'", "''"), dirName, data.PhysicalDrive.DriveId, data.PartitionId);
+            string sql = string.Format("select FileId from FileIndex where FileName = '{0}' and FilePath = '{1}' and DriveId = '{2}' and PartitionId = '{3}'", fi.Name.Replace("'", "''"), dirName.Replace("'", "''"), data.PhysicalDrive.DriveId, data.PartitionId);
 
             returnVal = LocalSqllite.ExecSQLCommandScalar(sql);
 
@@ -266,9 +268,8 @@ namespace DriveIndexer
                 string fileExists = CheckFileExists(data, fi);
                 if (fileExists == "")
                 {
-                    if (ui != null)
-                        ui.OutputFileScanned(string.Format("Hashing File: {0} (Size: {1})", fi.Name, fi.Length));
-
+                    // if (ui != null)
+                    //    ui.OutputFileScanned(string.Format("Hashing File: {0} (Size: {1})", fi.Name, fi.Length));
                     string hash = ""; // GetFileHash(fi.FullName);
 
                     // insert statment
@@ -277,7 +278,7 @@ namespace DriveIndexer
                     sqlStatement.AppendLine(string.Format(",'{0}'", data.PartitionId));
                     sqlStatement.AppendLine(string.Format(",'{0}'", fi.Name.Replace("'","''")));
                     sqlStatement.AppendLine(string.Format(",'{0}'", fi.Extension));
-                    sqlStatement.AppendLine(string.Format(",'{0}'", dirName));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", dirName.Replace("'", "''")));
                     sqlStatement.AppendLine(string.Format(",'{0}'", fi.Length));
                     sqlStatement.AppendLine(string.Format(",'{0}'", "unknown type"));
                     sqlStatement.AppendLine(string.Format(",'{0}'", "unknown tag"));
@@ -342,6 +343,13 @@ namespace DriveIndexer
             }
 
             return hash;
+        }
+
+        public static bool UpdateDriveScannedStatus(PhysicalDriveData data)
+        {
+            string sql = string.Format("Update PhysicalDrives set DriveScanned = 1, DriveScannedDate = '{0}' where DriveId = '{1}'", DateTime.Now.ToString("YYYY-MM-DD"), data.DriveId);
+
+            return LocalSqllite.ExecSQLCommand(sql);
         }
     }
 }

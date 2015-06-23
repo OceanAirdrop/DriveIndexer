@@ -190,7 +190,7 @@ namespace DriveIndexer
 
                 //SetupExtensionWhiteList();
 
-                System.IO.DriveInfo di = new System.IO.DriveInfo(logicalDrive.Name);
+                System.IO.DriveInfo di = new System.IO.DriveInfo(logicalDrive.DeviceID);
 
                 // Here we skip the drive if it is not ready to be read. This 
                 // is not necessarily the appropriate action in all scenarios. 

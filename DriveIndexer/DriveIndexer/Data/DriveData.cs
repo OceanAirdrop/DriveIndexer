@@ -8,16 +8,18 @@ namespace DriveIndexer
 {
     public class PhysicalDriveData
     {
-        public string DriveId { get; set; }              // id
-        public string Caption { get; set; }         // Hitachi HTS725032A9A364
-        public string InterfaceType { get; set; }   // IDE
-        public string Manufacturer { get; set; }    // (Standard disk drives)
-        public string MediaType { get; set; }       // Fixed hard disk media
-        public string Model { get; set; }           // Hitachi HTS725032A9A364
-        public string Partitions { get; set; }      // 2
-        public string SerialNumber { get; set; }    // 019022CPCK00PBPGM0KU
-        public string Size { get; set; }            // 320070320640
-        public string UserComment { get; set; }     // ?
+        public string DriveId { get; set; }             // id
+        public string Caption { get; set; }             // Hitachi HTS725032A9A364
+        public string InterfaceType { get; set; }       // IDE
+        public string Manufacturer { get; set; }        // (Standard disk drives)
+        public string MediaType { get; set; }           // Fixed hard disk media
+        public string Model { get; set; }               // Hitachi HTS725032A9A364
+        public string Partitions { get; set; }          // 2
+        public string SerialNumber { get; set; }        // 019022CPCK00PBPGM0KU
+        public string Size { get; set; }                // 320070320640
+        public string UserComment { get; set; }         // ?
+        public string DriveScanned { get; set; }        // ?
+        public string DriveScannedDate { get; set; }     // ?
         
         public List<DrivePartitionData> m_drivePartitions = new List<DrivePartitionData>();
     }

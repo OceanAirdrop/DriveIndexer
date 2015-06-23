@@ -38,7 +38,7 @@ namespace OceanAirdrop
             catch (Exception ex)
             {
                 bSuccess = false;
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(string.Format("{0}: {1}", ex.Message, sql));
             }
 
             return bSuccess;
@@ -62,7 +62,7 @@ namespace OceanAirdrop
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine( string.Format("{0}: {1}", ex.Message, sql));
             }
 
             return retVal;
@@ -120,6 +120,8 @@ namespace OceanAirdrop
                 sb.Append("Caption text, ");
                 sb.Append("InterfaceType text, ");
                 sb.Append("Size numeric, ");
+                sb.Append("DriveScanned numeric, ");  // has drive been fully scanned
+                sb.Append("DriveScannedDate text, ");
                 sb.Append("UserComment text); ");
 
                 ExecSQLCommand(sb.ToString());

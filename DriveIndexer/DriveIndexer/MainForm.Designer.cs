@@ -30,16 +30,19 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewDrives = new System.Windows.Forms.DataGridView();
+            this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
+            this.buttonIndexFiles = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.buttonFileViewer = new System.Windows.Forms.Button();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InterfaceType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Partitions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
-            this.buttonIndexFiles = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDrives)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,52 +63,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewDrives.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDrives.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
             this.Column1,
             this.DriveSerialNum,
             this.DriveModel,
             this.InterfaceType,
             this.Partitions,
-            this.DriveSize});
+            this.DriveSize,
+            this.Column3});
             this.dataGridViewDrives.Location = new System.Drawing.Point(13, 13);
             this.dataGridViewDrives.Name = "dataGridViewDrives";
             this.dataGridViewDrives.Size = new System.Drawing.Size(700, 358);
             this.dataGridViewDrives.TabIndex = 4;
             this.dataGridViewDrives.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellClick);
             this.dataGridViewDrives.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellDoubleClick);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Description";
-            this.Column1.Name = "Column1";
-            // 
-            // DriveSerialNum
-            // 
-            this.DriveSerialNum.HeaderText = "DriveSerial#";
-            this.DriveSerialNum.Name = "DriveSerialNum";
-            this.DriveSerialNum.Width = 120;
-            // 
-            // DriveModel
-            // 
-            this.DriveModel.HeaderText = "DriveModel";
-            this.DriveModel.Name = "DriveModel";
-            this.DriveModel.Width = 180;
-            // 
-            // InterfaceType
-            // 
-            this.InterfaceType.HeaderText = "Type";
-            this.InterfaceType.Name = "InterfaceType";
-            this.InterfaceType.Width = 50;
-            // 
-            // Partitions
-            // 
-            this.Partitions.HeaderText = "Partitions";
-            this.Partitions.Name = "Partitions";
-            this.Partitions.Width = 70;
-            // 
-            // DriveSize
-            // 
-            this.DriveSize.HeaderText = "DriveSize";
-            this.DriveSize.Name = "DriveSize";
             // 
             // buttonRefreshDriveInfo
             // 
@@ -149,11 +120,67 @@
             this.button2.Text = "FileType Blacklist / Whitelist";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // buttonFileViewer
+            // 
+            this.buttonFileViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFileViewer.Location = new System.Drawing.Point(719, 246);
+            this.buttonFileViewer.Name = "buttonFileViewer";
+            this.buttonFileViewer.Size = new System.Drawing.Size(118, 53);
+            this.buttonFileViewer.TabIndex = 9;
+            this.buttonFileViewer.Text = "File Viewer";
+            this.buttonFileViewer.UseVisualStyleBackColor = true;
+            this.buttonFileViewer.Click += new System.EventHandler(this.buttonFileViewer_Click);
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "DriveScanned";
+            this.Column2.Name = "Column2";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Description";
+            this.Column1.Name = "Column1";
+            // 
+            // DriveSerialNum
+            // 
+            this.DriveSerialNum.HeaderText = "DriveSerial#";
+            this.DriveSerialNum.Name = "DriveSerialNum";
+            this.DriveSerialNum.Width = 120;
+            // 
+            // DriveModel
+            // 
+            this.DriveModel.HeaderText = "DriveModel";
+            this.DriveModel.Name = "DriveModel";
+            this.DriveModel.Width = 180;
+            // 
+            // InterfaceType
+            // 
+            this.InterfaceType.HeaderText = "Type";
+            this.InterfaceType.Name = "InterfaceType";
+            this.InterfaceType.Width = 50;
+            // 
+            // Partitions
+            // 
+            this.Partitions.HeaderText = "Partitions";
+            this.Partitions.Name = "Partitions";
+            this.Partitions.Width = 70;
+            // 
+            // DriveSize
+            // 
+            this.DriveSize.HeaderText = "DriveSize";
+            this.DriveSize.Name = "DriveSize";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "DriveScannedDate";
+            this.Column3.Name = "Column3";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 409);
+            this.Controls.Add(this.buttonFileViewer);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonIndexFiles);
@@ -176,14 +203,17 @@
         private System.Windows.Forms.DataGridView dataGridViewDrives;
         private System.Windows.Forms.Button buttonRefreshDriveInfo;
         private System.Windows.Forms.Button buttonIndexFiles;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonFileViewer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveSerialNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveModel;
         private System.Windows.Forms.DataGridViewTextBoxColumn InterfaceType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Partitions;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveSize;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
     }
 }
 

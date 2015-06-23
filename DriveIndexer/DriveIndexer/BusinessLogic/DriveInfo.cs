@@ -37,11 +37,11 @@ namespace DriveIndexer
                 driveData.SerialNumber = GetProperty(diskDriveInstanceObject, "SerialNumber");
                 driveData.Size = GetProperty(diskDriveInstanceObject, "Size");
 
-                //DumpProperties(diskDriveInstanceObject, 0);
+                Console.WriteLine(DumpProperties(diskDriveInstanceObject, 0));
 
                 foreach (ManagementObject diskPartitionObject in diskDriveInstanceObject.GetRelated("Win32_DiskPartition"))
                 {
-                    //sb.AppendLine(DumpProperties(diskPartitionObject, 1));
+                    Console.WriteLine(DumpProperties(diskPartitionObject, 1));
 
                     foreach (ManagementBaseObject logicalDiskObject in diskPartitionObject.GetRelated("Win32_LogicalDisk"))
                     {
@@ -55,12 +55,14 @@ namespace DriveIndexer
                         partitionData.FileSystem = GetProperty(logicalDiskObject, "FileSystem");
                         partitionData.FreeSpace = GetProperty(logicalDiskObject, "FreeSpace");
                         partitionData.MediaType = GetProperty(logicalDiskObject, "MediaType");
-                        partitionData.Name = GetProperty(logicalDiskObject, "Name");
+                        partitionData.Name = GetProperty(logicalDiskObject, "VolumeName");
                         partitionData.Size = GetProperty(logicalDiskObject, "Size");
                         partitionData.VolumeSerialNumber = GetProperty(logicalDiskObject, "VolumeSerialNumber");
 
                         driveData.m_drivePartitions.Add(partitionData);
                         //sb.AppendLine(DumpProperties(logicalDiskObject, 2));
+
+                        Console.WriteLine(DumpProperties(logicalDiskObject, 1));
 
                         
                         byte[] toBytes = Encoding.ASCII.GetBytes(driveData.SerialNumber);

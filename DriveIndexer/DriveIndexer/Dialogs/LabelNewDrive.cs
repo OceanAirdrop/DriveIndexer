@@ -22,16 +22,27 @@ namespace DriveIndexer.Dialogs
 
         private void LabelNewDrive_Load(object sender, EventArgs e)
         {
-            if ( m_driveData.InterfaceType == "IDE")
-            {
-                textBoxUserDescription.Text = "Internal computer harddisk";
-            }
-
             textBoxModel.Text = m_driveData.Model;
             textBoxPartitions.Text = m_driveData.Partitions;
             textBoxSerial.Text = m_driveData.SerialNumber;
             textBoxType.Text = m_driveData.InterfaceType;
             textBoxSize.Text = m_driveData.Size;
+
+            if (m_driveData.InterfaceType == "IDE")
+            {
+                textBoxUserDescription.Text = "Internal computer harddisk";
+            }
+            else
+            {
+                foreach (var drivePartition in m_driveData.m_drivePartitions)
+                {
+                    if (string.IsNullOrEmpty(drivePartition.Name) == false)
+                    {
+                        textBoxUserDescription.Text = drivePartition.Name;
+                        break;
+                    }
+                }
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

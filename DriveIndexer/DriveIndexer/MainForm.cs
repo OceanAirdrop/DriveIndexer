@@ -110,13 +110,14 @@ namespace DriveIndexer
         {
             int nNewRow = dgv.Rows.Add();
             int nColCount = 0;
-
+            dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.DriveScanned;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.UserComment;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.SerialNumber;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Model;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.InterfaceType;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Partitions;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Size;
+            dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.DriveScannedDate;
 
             // Assosiate driveData with this row.
             dgv.Rows[nNewRow].Tag = driveData;
@@ -152,6 +153,9 @@ namespace DriveIndexer
             }
             else
             {
+                DBHelper.UpdateDriveScannedStatus(m_dgvSelectedDrive);
+                PopulateListView();
+
                 MessageBox.Show("Scan completed successfully.");
             }
         }
@@ -173,6 +177,12 @@ namespace DriveIndexer
         {
             WriteCurrentDriveListToDatabase();
             PopulateListView();
+        }
+
+        private void buttonFileViewer_Click(object sender, EventArgs e)
+        {
+            FileViewer dlg = new FileViewer();
+            dlg.ShowDialog();
         }
 
 
