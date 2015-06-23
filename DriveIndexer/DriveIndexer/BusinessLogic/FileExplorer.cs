@@ -20,7 +20,7 @@ namespace DriveIndexer
 
         static IFileExplorerUIManager m_uiManager = null;
 
-        static System.Collections.Specialized.StringCollection log = new System.Collections.Specialized.StringCollection();
+        //static System.Collections.Specialized.StringCollection log = new System.Collections.Specialized.StringCollection();
 
         static List<string> m_extensionWhiteList = new List<string>();
         static List<string> m_extensionBlackList = new List<string>();
@@ -85,15 +85,22 @@ namespace DriveIndexer
         {
             bool bDriveAvailable = false;
 
-            List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
-
-            foreach (var drive in driveList)
+            try
             {
-                if (drive.SerialNumber == driveSelected.SerialNumber )
+                List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
+
+                foreach (var drive in driveList)
                 {
-                    bDriveAvailable = true;
-                    break;
+                    if (drive.SerialNumber == driveSelected.SerialNumber)
+                    {
+                        bDriveAvailable = true;
+                        break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return bDriveAvailable;
@@ -105,18 +112,25 @@ namespace DriveIndexer
         {
             bool bDriveAvailable = false;
 
-            List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
-
-            foreach (var drive in driveList)
+            try
             {
-                foreach ( var drivePartition in drive.m_drivePartitions )
+                List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
+
+                foreach (var drive in driveList)
                 {
-                    if ( drivePartition.VolumeSerialNumber == logicalDrive.VolumeSerialNumber )
+                    foreach (var drivePartition in drive.m_drivePartitions)
                     {
-                        bDriveAvailable = true;
-                        break;
+                        if (drivePartition.VolumeSerialNumber == logicalDrive.VolumeSerialNumber)
+                        {
+                            bDriveAvailable = true;
+                            break;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             //string[] availableDriveLabels = System.Environment.GetLogicalDrives();
@@ -131,18 +145,25 @@ namespace DriveIndexer
         {
             string currentDriveLetter = "";
 
-            List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
-
-            foreach (var drive in driveList)
+            try
             {
-                foreach (var drivePartition in drive.m_drivePartitions)
+                List<PhysicalDriveData> driveList = DriveInfoScanner.ScanDrives();
+
+                foreach (var drive in driveList)
                 {
-                    if (drivePartition.VolumeSerialNumber == driveInfo.VolumeSerialNumber)
+                    foreach (var drivePartition in drive.m_drivePartitions)
                     {
-                        currentDriveLetter = drivePartition.Name;
-                        break;
+                        if (drivePartition.VolumeSerialNumber == driveInfo.VolumeSerialNumber)
+                        {
+                            currentDriveLetter = drivePartition.Name;
+                            break;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return currentDriveLetter;
@@ -152,33 +173,40 @@ namespace DriveIndexer
 
         public static void ScanDrive(DrivePartitionData logicalDrive)
         {
-            m_logicalDrive = logicalDrive;
-
-            if ( CheckIfDriveAvailableToScan(logicalDrive) == false )
+            try
             {
-                OutputMessage(string.Format("Logical Drive: {0} not available to scan", logicalDrive.Name));
-                return;
+                m_logicalDrive = logicalDrive;
+
+                if (CheckIfDriveAvailableToScan(logicalDrive) == false)
+                {
+                    OutputMessage(string.Format("Logical Drive: {0} not available to scan", logicalDrive.Name));
+                    return;
+                }
+
+                logicalDrive.Name = GetCurrentDriveLetterForDrive(logicalDrive);
+
+                OutputMessage(string.Format("Starting scan: {0}", logicalDrive.Name));
+
+
+                //SetupExtensionWhiteList();
+
+                System.IO.DriveInfo di = new System.IO.DriveInfo(logicalDrive.Name);
+
+                // Here we skip the drive if it is not ready to be read. This 
+                // is not necessarily the appropriate action in all scenarios. 
+                if (!di.IsReady)
+                {
+                    OutputMessage(string.Format("The drive: {0} could not be read", di.Name));
+                    Console.WriteLine("The drive {0} could not be read", di.Name);
+                    return;
+                }
+                System.IO.DirectoryInfo rootDir = di.RootDirectory;
+                WalkDirectoryTree(rootDir);
             }
-
-            logicalDrive.Name = GetCurrentDriveLetterForDrive( logicalDrive );
-
-            OutputMessage(string.Format("Starting scan: {0}", logicalDrive.Name));
-
-
-            //SetupExtensionWhiteList();
-
-            System.IO.DriveInfo di = new System.IO.DriveInfo(logicalDrive.Name);
-
-            // Here we skip the drive if it is not ready to be read. This 
-            // is not necessarily the appropriate action in all scenarios. 
-            if (!di.IsReady)
+            catch (Exception ex)
             {
-                OutputMessage(string.Format("The drive: {0} could not be read", di.Name));
-                Console.WriteLine("The drive {0} could not be read", di.Name);
-                return;
+                Console.WriteLine(ex.Message);
             }
-            System.IO.DirectoryInfo rootDir = di.RootDirectory;
-            WalkDirectoryTree(rootDir);
         }
 
         //public static void ScanDrive( string driveLetter )
@@ -245,65 +273,83 @@ namespace DriveIndexer
 
         static void WalkDirectoryTree(System.IO.DirectoryInfo root)
         {
-            System.IO.FileInfo[] files = null;
-            System.IO.DirectoryInfo[] subDirs = null;
-
-            // First, process all the files directly under this folder 
             try
             {
-                files = root.GetFiles("*.*");
+                if (bCancelProcess == true)
+                    return;
 
-                m_uiManager.OutputCurrentDirectoryBeingScanned( root.FullName );
-            }
-            // This is thrown if even one of the files requires permissions greater 
-            // than the application provides. 
-            catch (UnauthorizedAccessException e)
-            {
-                // This code just writes out the message and continues to recurse. 
-                // You may decide to do something different here. For example, you 
-                // can try to elevate your privileges and access the file again.
-                log.Add(e.Message);
-            }
-            catch (System.IO.DirectoryNotFoundException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+                System.IO.FileInfo[] files = null;
+                System.IO.DirectoryInfo[] subDirs = null;
 
-            if (files != null)
-            {
-                foreach (System.IO.FileInfo fi in files)
+                // First, process all the files directly under this folder 
+                try
                 {
-                    if (bCancelProcess == true)
-                        return;
+                    files = root.GetFiles("*.*");
 
-                    if ( IsExtensionBlackListed( fi.Extension ) == true )
+                    m_uiManager.OutputCurrentDirectoryBeingScanned(root.FullName);
+                }
+                // This is thrown if even one of the files requires permissions greater 
+                // than the application provides. 
+                catch (UnauthorizedAccessException e)
+                {
+                    // This code just writes out the message and continues to recurse. 
+                    // You may decide to do something different here. For example, you 
+                    // can try to elevate your privileges and access the file again.
+                    //log.Add(e.Message);
+                    Console.WriteLine(e.Message);
+                }
+                catch (System.IO.DirectoryNotFoundException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+                if (files != null)
+                {
+                    foreach (System.IO.FileInfo fi in files)
                     {
-                        OutputMessage(string.Format("Skipping File (Blacklisted): {0}", fi.Name));
-                        continue;
-                    }
-
-                    if ( IstExtensionWhiteListed( fi.Extension ) == true )
-                    {
-                        //Console.WriteLine(fi.FullName);
-                        //var x = m_logicalDrive.Name;
-                        //OutputMessage(string.Format("file: {0}", fi.FullName));
-
-                        if (DBHelper.WriteFileToDatabase(m_logicalDrive, fi, m_uiManager) == true)
+                        try
                         {
-                            m_indexedFileCount++;
-                            m_uiManager.OutputFileIndexCount(m_indexedFileCount);
-                        }                       
+                            if (bCancelProcess == true)
+                                return;
+
+                            if (IsExtensionBlackListed(fi.Extension) == true)
+                            {
+                                OutputMessage(string.Format("Skipping File (Blacklisted): {0}", fi.Name));
+                                continue;
+                            }
+
+                            if (IstExtensionWhiteListed(fi.Extension) == true)
+                            {
+                                //Console.WriteLine(fi.FullName);
+                                //var x = m_logicalDrive.Name;
+                                //OutputMessage(string.Format("file: {0}", fi.FullName));
+
+                                if (DBHelper.WriteFileToDatabase(m_logicalDrive, fi, m_uiManager) == true)
+                                {
+                                    m_indexedFileCount++;
+                                    m_uiManager.OutputFileIndexCount(m_indexedFileCount);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+
+                    // Now find all the subdirectories under this directory.
+                    subDirs = root.GetDirectories();
+
+                    foreach (System.IO.DirectoryInfo dirInfo in subDirs)
+                    {
+                        // Resursive call for each subdirectory.
+                        WalkDirectoryTree(dirInfo);
                     }
                 }
-
-                // Now find all the subdirectories under this directory.
-                subDirs = root.GetDirectories();
-
-                foreach (System.IO.DirectoryInfo dirInfo in subDirs)
-                {
-                    // Resursive call for each subdirectory.
-                    WalkDirectoryTree(dirInfo);
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

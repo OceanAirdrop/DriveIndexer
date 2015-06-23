@@ -16,26 +16,33 @@ namespace DriveIndexer
         {
             List<PhysicalDriveData> list = new List<PhysicalDriveData>();
 
-            string sql = "select DriveId, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment FROM PhysicalDrives";
-            SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                PhysicalDriveData data = new PhysicalDriveData();
-                data.DriveId = reader["DriveId"].ToString();
-                data.SerialNumber = reader["SerialNumber"].ToString();
-                data.Manufacturer = reader["Manufacturer"].ToString();
-                data.MediaType = reader["MediaType"].ToString();
-                data.Model = reader["Model"].ToString();
-                data.Partitions = reader["Partitions"].ToString();
-                data.Caption = reader["Caption"].ToString();
-                data.InterfaceType = reader["InterfaceType"].ToString();
-                data.Size = reader["Size"].ToString();
-                data.UserComment = reader["UserComment"].ToString();
+                string sql = "select DriveId, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment FROM PhysicalDrives";
+                SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    PhysicalDriveData data = new PhysicalDriveData();
+                    data.DriveId = reader["DriveId"].ToString();
+                    data.SerialNumber = reader["SerialNumber"].ToString();
+                    data.Manufacturer = reader["Manufacturer"].ToString();
+                    data.MediaType = reader["MediaType"].ToString();
+                    data.Model = reader["Model"].ToString();
+                    data.Partitions = reader["Partitions"].ToString();
+                    data.Caption = reader["Caption"].ToString();
+                    data.InterfaceType = reader["InterfaceType"].ToString();
+                    data.Size = reader["Size"].ToString();
+                    data.UserComment = reader["UserComment"].ToString();
 
-                data.m_drivePartitions = ReadDrivePartitionList(data);
-                list.Add(data);
+                    data.m_drivePartitions = ReadDrivePartitionList(data);
+                    list.Add(data);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return list;
@@ -45,27 +52,34 @@ namespace DriveIndexer
         {
             List<DrivePartitionData> list = new List<DrivePartitionData>();
 
-            string sql = "select PartitionId, DriveId, VolumeSerialNumber, Name, Caption, Description, DeviceID, DriveType, FileSystem, FreeSpace, Size, UserComment FROM PhysicalDrivePartitions where DriveId = " + drive.DriveId;
-            SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                DrivePartitionData data = new DrivePartitionData();
-                data.PartitionId = reader["PartitionId"].ToString();
-                data.DriveId = reader["DriveId"].ToString();
-                data.VolumeSerialNumber = reader["VolumeSerialNumber"].ToString();
-                data.Name = reader["Name"].ToString();
-                data.Description = reader["Description"].ToString();
-                data.DeviceID = reader["DeviceID"].ToString();
-                data.DriveType = reader["DriveType"].ToString();
-                data.FileSystem = reader["FileSystem"].ToString();
-                data.FreeSpace = reader["FreeSpace"].ToString();
-                data.Size = reader["Size"].ToString();
-                data.UserComment = reader["UserComment"].ToString();
+                string sql = "select PartitionId, DriveId, VolumeSerialNumber, Name, Caption, Description, DeviceID, DriveType, FileSystem, FreeSpace, Size, UserComment FROM PhysicalDrivePartitions where DriveId = " + drive.DriveId;
+                SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    DrivePartitionData data = new DrivePartitionData();
+                    data.PartitionId = reader["PartitionId"].ToString();
+                    data.DriveId = reader["DriveId"].ToString();
+                    data.VolumeSerialNumber = reader["VolumeSerialNumber"].ToString();
+                    data.Name = reader["Name"].ToString();
+                    data.Description = reader["Description"].ToString();
+                    data.DeviceID = reader["DeviceID"].ToString();
+                    data.DriveType = reader["DriveType"].ToString();
+                    data.FileSystem = reader["FileSystem"].ToString();
+                    data.FreeSpace = reader["FreeSpace"].ToString();
+                    data.Size = reader["Size"].ToString();
+                    data.UserComment = reader["UserComment"].ToString();
 
-                data.PhysicalDrive = drive;
+                    data.PhysicalDrive = drive;
 
-                list.Add(data);
+                    list.Add(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             return list;
@@ -73,24 +87,32 @@ namespace DriveIndexer
 
         public static void PopulatePhyicalDriveTable( List<PhysicalDriveData> driveList )
         {
-            string sql = "";
-            foreach (var drive in driveList)
+            try
             {
-                // check if we have already seen this drive! 
-                sql = WritePhysicalDriveToDatabase( drive );
-                LocalSqllite.ExecSQLCommand( sql );
-
-                string driveId = CheckDriveIdExists( drive );
-
-                foreach ( var drivePartition in drive.m_drivePartitions )
+                string sql = "";
+                foreach (var drive in driveList)
                 {
-                    sql = WritePartitionDataToDatabase( driveId, drivePartition );
-                    LocalSqllite.ExecSQLCommand( sql );
+                    // check if we have already seen this drive! 
+                    sql = WritePhysicalDriveToDatabase(drive);
+                    LocalSqllite.ExecSQLCommand(sql);
+
+                    string driveId = CheckDriveIdExists(drive);
+
+                    foreach (var drivePartition in drive.m_drivePartitions)
+                    {
+                        sql = WritePartitionDataToDatabase(driveId, drivePartition);
+                        LocalSqllite.ExecSQLCommand(sql);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
 
-        private static string CheckDriveIdExists( PhysicalDriveData data )
+        public static string CheckDriveIdExists( PhysicalDriveData data )
         {
             string returnVal = "";
             string sql = string.Format("select DriveId from PhysicalDrives where SerialNumber = '{0}'", data.SerialNumber);
@@ -113,37 +135,44 @@ namespace DriveIndexer
         private static string WritePhysicalDriveToDatabase( PhysicalDriveData data )
         {
             StringBuilder sqlStatement = new StringBuilder();
-            
-            string driveId = CheckDriveIdExists( data );
-            if ( driveId == "") 
+
+            try
             {
-                // insert statment
-                sqlStatement.AppendLine("INSERT OR IGNORE INTO PhysicalDrives ( SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment ) VALUES ( ");
-                sqlStatement.AppendLine( string.Format("'{0}'", data.SerialNumber) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.Manufacturer) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.MediaType) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.Model) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.Partitions) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.Caption) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.InterfaceType) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.Size) );
-                sqlStatement.AppendLine( string.Format(",'{0}'", data.UserComment) );
-                sqlStatement.AppendLine(");");
+                string driveId = CheckDriveIdExists(data);
+                if (driveId == "")
+                {
+                    // insert statment
+                    sqlStatement.AppendLine("INSERT OR IGNORE INTO PhysicalDrives ( SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment ) VALUES ( ");
+                    sqlStatement.AppendLine(string.Format("'{0}'", data.SerialNumber));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Manufacturer));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.MediaType));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Model));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Partitions));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Caption));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.InterfaceType));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Size));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.UserComment));
+                    sqlStatement.AppendLine(");");
+                }
+                else
+                {
+                    // update statment
+                    //sqlStatement.AppendLine("UPDATE PhysicalDrives SET ");
+                    //sqlStatement.AppendLine(string.Format("SerialNumber = '{0}'", data.SerialNumber));
+                    //sqlStatement.AppendLine(string.Format(",Manufacturer = '{0}'", data.Manufacturer));
+                    //sqlStatement.AppendLine(string.Format(",MediaType = '{0}'", data.MediaType));
+                    //sqlStatement.AppendLine(string.Format(",Model = '{0}'", data.Model));
+                    //sqlStatement.AppendLine(string.Format(",Partitions = '{0}'", data.Partitions));
+                    //sqlStatement.AppendLine(string.Format(",Caption = '{0}'", data.Caption));
+                    //sqlStatement.AppendLine(string.Format(",InterfaceType = '{0}'", data.InterfaceType));
+                    //sqlStatement.AppendLine(string.Format(",Size = '{0}'", data.Size));
+                    //sqlStatement.AppendLine(string.Format(",UserComment = '{0}'", data.UserComment));
+                    //sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", driveId));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // update statment
-                sqlStatement.AppendLine("UPDATE PhysicalDrives SET ");
-                sqlStatement.AppendLine(string.Format("SerialNumber = '{0}'", data.SerialNumber));
-                sqlStatement.AppendLine(string.Format("Manufacturer = '{0}'", data.Manufacturer));
-                sqlStatement.AppendLine(string.Format("MediaType = '{0}'", data.MediaType));
-                sqlStatement.AppendLine(string.Format("Model = '{0}'", data.Model));
-                sqlStatement.AppendLine(string.Format("Partitions = '{0}'", data.Partitions));
-                sqlStatement.AppendLine(string.Format("Caption = '{0}'", data.Caption));
-                sqlStatement.AppendLine(string.Format("InterfaceType = '{0}'", data.InterfaceType));
-                sqlStatement.AppendLine(string.Format("Size = '{0}'", data.Size));
-                sqlStatement.AppendLine(string.Format("UserComment = '{0}'", data.UserComment));
-                sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", driveId));
+                Console.WriteLine(ex.Message);
             }
 
             return sqlStatement.ToString();
@@ -153,39 +182,46 @@ namespace DriveIndexer
         {
             StringBuilder sqlStatement = new StringBuilder();
 
-            string partitionId = CheckPartitionIdExists(driveId, data);
-            if (partitionId == "")
+            try
             {
-                // insert statment
-                sqlStatement.AppendLine("INSERT OR IGNORE INTO PhysicalDrivePartitions ( DriveId, VolumeSerialNumber, Name, Caption, Description, DeviceID, DriveType, FileSystem, FreeSpace, Size, UserComment ) VALUES ( ");
-                sqlStatement.AppendLine(string.Format("'{0}'", driveId));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.VolumeSerialNumber));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.Name));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.Caption));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.Description));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.DeviceID));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.DriveType));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.FileSystem));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.FreeSpace));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.Size));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.UserComment));
-                sqlStatement.AppendLine(");");
+                string partitionId = CheckPartitionIdExists(driveId, data);
+                if (partitionId == "")
+                {
+                    // insert statment
+                    sqlStatement.AppendLine("INSERT OR IGNORE INTO PhysicalDrivePartitions ( DriveId, VolumeSerialNumber, Name, Caption, Description, DeviceID, DriveType, FileSystem, FreeSpace, Size, UserComment ) VALUES ( ");
+                    sqlStatement.AppendLine(string.Format("'{0}'", driveId));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.VolumeSerialNumber));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Name));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Caption));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Description));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.DeviceID));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.DriveType));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.FileSystem));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.FreeSpace));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.Size));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.UserComment));
+                    sqlStatement.AppendLine(");");
+                }
+                else
+                {
+                    //// update statment
+                    //sqlStatement.AppendLine("UPDATE PhysicalDrivePartitions SET ");
+                    //sqlStatement.AppendLine(string.Format("VolumeSerialNumber = '{0}'", data.VolumeSerialNumber));
+                    //sqlStatement.AppendLine(string.Format(",Name = '{0}'", data.Name));
+                    //sqlStatement.AppendLine(string.Format(",Caption = '{0}'", data.Caption));
+                    //sqlStatement.AppendLine(string.Format(",Description = '{0}'", data.Description));
+                    //sqlStatement.AppendLine(string.Format(",DeviceID = '{0}'", data.DeviceID));
+                    //sqlStatement.AppendLine(string.Format(",DriveType = '{0}'", data.DriveType));
+                    //sqlStatement.AppendLine(string.Format(",FileSystem = '{0}'", data.FileSystem));
+                    //sqlStatement.AppendLine(string.Format(",FreeSpace = '{0}'", data.FreeSpace));
+                    //sqlStatement.AppendLine(string.Format(",Size = '{0}'", data.Size));
+                    //sqlStatement.AppendLine(string.Format(",UserComment = '{0}'", data.UserComment));
+                    //sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", partitionId));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // update statment
-                sqlStatement.AppendLine("UPDATE PhysicalDrivePartitions SET ");
-                sqlStatement.AppendLine(string.Format("VolumeSerialNumber = '{0}'", data.VolumeSerialNumber));
-                sqlStatement.AppendLine(string.Format("Name = '{0}'", data.Name));
-                sqlStatement.AppendLine(string.Format("Caption = '{0}'", data.Caption));
-                sqlStatement.AppendLine(string.Format("Description = '{0}'", data.Description));
-                sqlStatement.AppendLine(string.Format("DeviceID = '{0}'", data.DeviceID));
-                sqlStatement.AppendLine(string.Format("DriveType = '{0}'", data.DriveType));
-                sqlStatement.AppendLine(string.Format("FileSystem = '{0}'", data.FileSystem));
-                sqlStatement.AppendLine(string.Format("FreeSpace = '{0}'", data.FreeSpace));
-                sqlStatement.AppendLine(string.Format("Size = '{0}'", data.Size));
-                sqlStatement.AppendLine(string.Format("UserComment = '{0}'", data.UserComment));
-                sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", partitionId));
+                Console.WriteLine(ex.Message);
             }
 
             return sqlStatement.ToString();
@@ -197,7 +233,7 @@ namespace DriveIndexer
 
             string dirName = GetDirectoryName(fi);
 
-            string sql = string.Format("select FileId from FileIndex where FileName = '{0}' and FilePath = '{1}' and DriveId = '{2}' and PartitionId = '{3}'", fi.Name, dirName, data.PhysicalDrive.DriveId, data.PartitionId);
+            string sql = string.Format("select FileId from FileIndex where FileName = '{0}' and FilePath = '{1}' and DriveId = '{2}' and PartitionId = '{3}'", fi.Name.Replace("'", "''"), dirName, data.PhysicalDrive.DriveId, data.PartitionId);
 
             returnVal = LocalSqllite.ExecSQLCommandScalar(sql);
 
@@ -221,60 +257,67 @@ namespace DriveIndexer
         {
             bool bSuccessInsert = false;
 
-            string dirName = GetDirectoryName(fi);
-
-            StringBuilder sqlStatement = new StringBuilder();
-
-            string fileExists = CheckFileExists(data, fi);
-            if (fileExists == "")
+            try
             {
-                if (ui != null)
-                    ui.OutputFileScanned(string.Format("Hashing File: {0} (Size: {1})", fi.Name, fi.Length));
+                string dirName = GetDirectoryName(fi);
 
-                string hash = ""; // GetFileHash(fi.FullName);
+                StringBuilder sqlStatement = new StringBuilder();
 
-                // insert statment
-                sqlStatement.AppendLine("INSERT OR IGNORE INTO FileIndex ( DriveId, PartitionId, FileName, FileExtension, FilePath, FileSize, FileTypeId, FileTag, FileHash, UserComment ) VALUES ( ");
-                sqlStatement.AppendLine(string.Format("'{0}'", data.PhysicalDrive.DriveId));
-                sqlStatement.AppendLine(string.Format(",'{0}'", data.PartitionId));
-                sqlStatement.AppendLine(string.Format(",'{0}'", fi.Name));
-                sqlStatement.AppendLine(string.Format(",'{0}'", fi.Extension));
-                sqlStatement.AppendLine(string.Format(",'{0}'", dirName));
-                sqlStatement.AppendLine(string.Format(",'{0}'", fi.Length));
-                sqlStatement.AppendLine(string.Format(",'{0}'", "unknown type" ));
-                sqlStatement.AppendLine(string.Format(",'{0}'", "unknown tag"));
-                sqlStatement.AppendLine(string.Format(",'{0}'", hash));
-                sqlStatement.AppendLine(string.Format(",'{0}'", "user comment"));
-                sqlStatement.AppendLine(");");
+                string fileExists = CheckFileExists(data, fi);
+                if (fileExists == "")
+                {
+                    if (ui != null)
+                        ui.OutputFileScanned(string.Format("Hashing File: {0} (Size: {1})", fi.Name, fi.Length));
 
-                bSuccessInsert = LocalSqllite.ExecSQLCommand(sqlStatement.ToString());
+                    string hash = ""; // GetFileHash(fi.FullName);
 
-                Console.WriteLine(string.Format("{0}: {1}", hash, fi.FullName));
-                if ( ui != null )
-                    ui.OutputFileScanned(string.Format("Indexing File: {0}", fi.Name));
+                    // insert statment
+                    sqlStatement.AppendLine("INSERT OR IGNORE INTO FileIndex ( DriveId, PartitionId, FileName, FileExtension, FilePath, FileSize, FileTypeId, FileTag, FileHash, UserComment ) VALUES ( ");
+                    sqlStatement.AppendLine(string.Format("'{0}'", data.PhysicalDrive.DriveId));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.PartitionId));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", fi.Name.Replace("'","''")));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", fi.Extension));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", dirName));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", fi.Length));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", "unknown type"));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", "unknown tag"));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", hash));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", "user comment"));
+                    sqlStatement.AppendLine(");");
+
+                    bSuccessInsert = LocalSqllite.ExecSQLCommand(sqlStatement.ToString());
+
+                    //Console.WriteLine(string.Format("{0}: {1}", hash, fi.FullName));
+                    if (ui != null)
+                        ui.OutputFileScanned(string.Format("Indexing File: {0}", fi.Name));
+                }
+                else
+                {
+                    //Console.WriteLine(string.Format("Skipping File (Already Indexed): {0}", fi.Name));
+                    if (ui != null)
+                        ui.OutputFileScanned(string.Format("Skipping File (Already Indexed): {0}", fi.FullName));
+                }
+                //else
+                //{
+                //    // update statment
+                //    sqlStatement.AppendLine("UPDATE PhysicalDrivePartitions SET ");
+                //    sqlStatement.AppendLine(string.Format("VolumeSerialNumber = '{0}'", data.VolumeSerialNumber));
+                //    sqlStatement.AppendLine(string.Format("Name = '{0}'", data.Name));
+                //    sqlStatement.AppendLine(string.Format("Caption = '{0}'", data.Caption));
+                //    sqlStatement.AppendLine(string.Format("Description = '{0}'", data.Description));
+                //    sqlStatement.AppendLine(string.Format("DeviceID = '{0}'", data.DeviceID));
+                //    sqlStatement.AppendLine(string.Format("DriveType = '{0}'", data.DriveType));
+                //    sqlStatement.AppendLine(string.Format("FileSystem = '{0}'", data.FileSystem));
+                //    sqlStatement.AppendLine(string.Format("FreeSpace = '{0}'", data.FreeSpace));
+                //    sqlStatement.AppendLine(string.Format("Size = '{0}'", data.Size));
+                //    sqlStatement.AppendLine(string.Format("UserComment = '{0}'", data.UserComment));
+                //    sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", partitionId));
+                //}
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Skipping File (Already Indexed): {0}", fi.Name));
-                if ( ui != null )
-                    ui.OutputFileScanned(string.Format("Skipping File (Already Indexed): {0}", fi.FullName));
+                Console.WriteLine(ex.Message);
             }
-            //else
-            //{
-            //    // update statment
-            //    sqlStatement.AppendLine("UPDATE PhysicalDrivePartitions SET ");
-            //    sqlStatement.AppendLine(string.Format("VolumeSerialNumber = '{0}'", data.VolumeSerialNumber));
-            //    sqlStatement.AppendLine(string.Format("Name = '{0}'", data.Name));
-            //    sqlStatement.AppendLine(string.Format("Caption = '{0}'", data.Caption));
-            //    sqlStatement.AppendLine(string.Format("Description = '{0}'", data.Description));
-            //    sqlStatement.AppendLine(string.Format("DeviceID = '{0}'", data.DeviceID));
-            //    sqlStatement.AppendLine(string.Format("DriveType = '{0}'", data.DriveType));
-            //    sqlStatement.AppendLine(string.Format("FileSystem = '{0}'", data.FileSystem));
-            //    sqlStatement.AppendLine(string.Format("FreeSpace = '{0}'", data.FreeSpace));
-            //    sqlStatement.AppendLine(string.Format("Size = '{0}'", data.Size));
-            //    sqlStatement.AppendLine(string.Format("UserComment = '{0}'", data.UserComment));
-            //    sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", partitionId));
-            //}
 
             return bSuccessInsert;
         }

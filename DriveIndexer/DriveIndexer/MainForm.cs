@@ -30,7 +30,8 @@ namespace DriveIndexer
 
             SetupDataGridView( dataGridViewDrives );
 
-            WriteCurrentDriveListToDatabase();
+           // WriteCurrentDriveListToDatabase();
+
             PopulateListView();
         }
 
@@ -61,6 +62,23 @@ namespace DriveIndexer
         private void WriteCurrentDriveListToDatabase()
         {
             List<PhysicalDriveData> currentDrives = DriveInfoScanner.ScanDrives();
+
+            foreach (var drive in currentDrives)
+            {
+                string driveId = DBHelper.CheckDriveIdExists(drive);
+                if ( driveId == "")
+                {
+                    // this is a new drive we have not seen before! Lets get a label/description for it.
+                    LabelNewDrive dlg = new LabelNewDrive();
+                    dlg.m_driveData = drive;
+
+                    if ( dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK )
+                    {
+                        drive.UserComment = dlg.m_userDescription;
+                    }
+                }
+
+            }
 
             // Add the current drives to the sqllite database
             DBHelper.PopulatePhyicalDriveTable(currentDrives);
@@ -93,6 +111,7 @@ namespace DriveIndexer
             int nNewRow = dgv.Rows.Add();
             int nColCount = 0;
 
+            dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.UserComment;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.SerialNumber;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Model;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.InterfaceType;
@@ -120,7 +139,7 @@ namespace DriveIndexer
                return;
            }
 
-            DialogResult dlgRes = MessageBox.Show(string.Format("Are you sure you want to scan the drive: {0}?", m_dgvSelectedDrive.Model), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+           DialogResult dlgRes = MessageBox.Show(string.Format("Are you sure you want to scan the drive: {0} Model: {1}", m_dgvSelectedDrive.UserComment, m_dgvSelectedDrive.Model), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dlgRes == DialogResult.No)
             {
                 return;
@@ -148,6 +167,12 @@ namespace DriveIndexer
                 return;
 
             m_dgvSelectedDrive = (PhysicalDriveData)dataGridViewDrives.Rows[e.RowIndex].Tag;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            WriteCurrentDriveListToDatabase();
+            PopulateListView();
         }
 
 
