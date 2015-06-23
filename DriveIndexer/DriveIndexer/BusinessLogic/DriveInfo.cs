@@ -22,6 +22,8 @@ namespace DriveIndexer
 
             foreach (ManagementObject diskDriveInstanceObject in diskDriveInstanceObjectCollection)
             {
+                bool bNoSerialNumber = false;
+
                 PhysicalDriveData driveData = new PhysicalDriveData();
 
                 //sb.AppendLine(DumpProperties(diskDriveInstanceObject, 0));
@@ -59,7 +61,36 @@ namespace DriveIndexer
 
                         driveData.m_drivePartitions.Add(partitionData);
                         //sb.AppendLine(DumpProperties(logicalDiskObject, 2));
+
+                        
+                        byte[] toBytes = Encoding.ASCII.GetBytes(driveData.SerialNumber);
+
+                        if (toBytes[0] == 31 || string.IsNullOrEmpty(driveData.SerialNumber) == true || string.IsNullOrWhiteSpace(driveData.SerialNumber) == true)
+                        {
+                            // Use logical drive serialnumbers!
+
+                            bNoSerialNumber = true;
+                            // http://blogs.msdn.com/b/oldnewthing/archive/2004/11/10/255047.aspx
+                            // Serial numbers are optional on USB devices!!! Why-O-Why!! Face-Palm!
+                            driveData.SerialNumber += partitionData.VolumeSerialNumber;
+                        }
+
+                        //if (driveData.SerialNumber != "")
+                        //{
+                        //    Console.WriteLine("blah");
+                        //}
+
+                        //byte[] toBytes = Encoding.ASCII.GetBytes(driveData.SerialNumber);
+
+                        //var toBytesStr = Encoding.ASCII.GetBytes(driveData.SerialNumber).ToString();
+
+                        //byte[] toBytes2 = Encoding.ASCII.GetBytes("");
                     }
+                }
+
+                if ( bNoSerialNumber == true)
+                {
+                    driveData.SerialNumber += "_NOSERIAL";
                 }
 
                 driveList.Add(driveData);

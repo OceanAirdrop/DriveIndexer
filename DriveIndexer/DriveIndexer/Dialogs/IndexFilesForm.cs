@@ -91,10 +91,11 @@ namespace DriveIndexer.Dialogs
 
                 ThreadSafe(delegate
                 {
-                    labelScanningFiles.Text = "Finished Scanning Drive!";
+                    //labelScanningFiles.Text = "Finished Scanning Drive!";
                     listBox1.Items.Insert(0, "Finished!");
                 });
 
+                MessageBox.Show("Finished Scan!");
                 this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 //this.Invoke(new Action(this.buttonOK_Click()));
 
@@ -179,7 +180,7 @@ namespace DriveIndexer.Dialogs
             {
                 ThreadSafe(delegate
                 {
-                    labelCurrentDirectory.Text = string.Format("Scanning: {0}", dir);
+                    labelCurrentDirectory.Text = string.Format("Scanning: {0}", dir.Replace("\\", "\\ "));
                 });
             }
             catch (Exception ex)
@@ -197,7 +198,7 @@ namespace DriveIndexer.Dialogs
 
                 m_blankTimer = new Timer();
                 m_blankTimer.Tick += new EventHandler(BlinkFilterTextEvent);
-                m_blankTimer.Interval = 621;
+                m_blankTimer.Interval = 1000;
                 m_blankTimer.Enabled = true;
                 m_blankTimer.Start();
             }
@@ -225,10 +226,10 @@ namespace DriveIndexer.Dialogs
         {
             try
             {
-                if (labelScanningFiles.ForeColor == Color.Red)
-                    labelScanningFiles.ForeColor = Color.White;
-                else
-                    labelScanningFiles.ForeColor = Color.Red;
+                //if (labelScanningFiles.ForeColor == Color.Red)
+                //    labelScanningFiles.ForeColor = Color.White;
+                //else
+                //    labelScanningFiles.ForeColor = Color.Red;
 
                 labelTimeElapsed.Text = string.Format("Time Elapsed: {0}:{1}:{2}", m_stopWatch.Elapsed.Hours.ToString("00"), m_stopWatch.Elapsed.Minutes.ToString("00"), m_stopWatch.Elapsed.Seconds.ToString("00"));
             }
