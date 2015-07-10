@@ -219,6 +219,12 @@ namespace DriveIndexer
             dlg.ShowDialog();
         }
 
+        private void pictureBoxHelp_Click(object sender, EventArgs e)
+        {
+            AboutBoxForm dlg = new AboutBoxForm();
+            dlg.ShowDialog();
+        }
+
 
     }
 }

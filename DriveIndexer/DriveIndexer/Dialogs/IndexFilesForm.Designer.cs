@@ -35,28 +35,28 @@
             this.labelFileIndexCount = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelTimeElapsed = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.buttonCancel);
+            this.panel1.Controls.Add(this.labelTimeElapsed);
             this.panel1.Controls.Add(this.labelDriveLabel);
             this.panel1.Controls.Add(this.labelCurrentDirectory);
             this.panel1.Controls.Add(this.labelFileIndexCount);
             this.panel1.Controls.Add(this.listBox1);
             this.panel1.Controls.Add(this.label12);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(1, 1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(379, 333);
+            this.panel1.Size = new System.Drawing.Size(379, 377);
             this.panel1.TabIndex = 0;
             // 
             // labelDriveLabel
@@ -77,7 +77,7 @@
             this.labelCurrentDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelCurrentDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCurrentDirectory.Location = new System.Drawing.Point(7, 64);
+            this.labelCurrentDirectory.Location = new System.Drawing.Point(7, 52);
             this.labelCurrentDirectory.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCurrentDirectory.Name = "labelCurrentDirectory";
             this.labelCurrentDirectory.Size = new System.Drawing.Size(357, 31);
@@ -88,7 +88,7 @@
             // 
             this.labelFileIndexCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelFileIndexCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelFileIndexCount.Location = new System.Drawing.Point(170, 309);
+            this.labelFileIndexCount.Location = new System.Drawing.Point(171, 304);
             this.labelFileIndexCount.Name = "labelFileIndexCount";
             this.labelFileIndexCount.Size = new System.Drawing.Size(195, 13);
             this.labelFileIndexCount.TabIndex = 104;
@@ -119,11 +119,21 @@
             this.label12.TabIndex = 102;
             this.label12.Text = "111";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DriveIndexer.Properties.Resources.scan_drive_24;
+            this.pictureBox1.Location = new System.Drawing.Point(10, 10);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 29);
+            this.pictureBox1.TabIndex = 100;
+            this.pictureBox1.TabStop = false;
+            // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(277, 341);
+            this.buttonCancel.Location = new System.Drawing.Point(275, 340);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(89, 25);
             this.buttonCancel.TabIndex = 1;
@@ -136,30 +146,18 @@
             this.labelTimeElapsed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelTimeElapsed.AutoSize = true;
             this.labelTimeElapsed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTimeElapsed.Location = new System.Drawing.Point(8, 347);
+            this.labelTimeElapsed.Location = new System.Drawing.Point(11, 344);
             this.labelTimeElapsed.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTimeElapsed.Name = "labelTimeElapsed";
             this.labelTimeElapsed.Size = new System.Drawing.Size(113, 16);
             this.labelTimeElapsed.TabIndex = 106;
             this.labelTimeElapsed.Text = "Time Elapsed: ";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::DriveIndexer.Properties.Resources.search_48;
-            this.pictureBox1.Location = new System.Drawing.Point(7, 4);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(43, 44);
-            this.pictureBox1.TabIndex = 100;
-            this.pictureBox1.TabStop = false;
-            // 
             // IndexFilesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(379, 377);
-            this.Controls.Add(this.labelTimeElapsed);
-            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -168,9 +166,9 @@
             this.Text = "Index Fles";
             this.Load += new System.EventHandler(this.IndexFilesForm_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

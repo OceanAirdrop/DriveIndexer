@@ -40,6 +40,7 @@
             this.DriveSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBoxHelp = new System.Windows.Forms.PictureBox();
             this.buttonFileSearch = new System.Windows.Forms.Button();
             this.buttonFileViewer = new System.Windows.Forms.Button();
             this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
@@ -48,6 +49,7 @@
             this.buttonDatabaseStatistics = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDrives)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelp)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -129,6 +131,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.pictureBoxHelp);
             this.panel1.Controls.Add(this.buttonFileSearch);
             this.panel1.Controls.Add(this.dataGridViewDrives);
             this.panel1.Controls.Add(this.label1);
@@ -142,6 +145,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(849, 367);
             this.panel1.TabIndex = 10;
+            // 
+            // pictureBoxHelp
+            // 
+            this.pictureBoxHelp.Image = global::DriveIndexer.Properties.Resources.help16;
+            this.pictureBoxHelp.Location = new System.Drawing.Point(822, 344);
+            this.pictureBoxHelp.Name = "pictureBoxHelp";
+            this.pictureBoxHelp.Size = new System.Drawing.Size(23, 20);
+            this.pictureBoxHelp.TabIndex = 12;
+            this.pictureBoxHelp.TabStop = false;
+            this.pictureBoxHelp.Click += new System.EventHandler(this.pictureBoxHelp_Click);
             // 
             // buttonFileSearch
             // 
@@ -241,6 +254,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDrives)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -264,6 +278,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonFileSearch;
+        private System.Windows.Forms.PictureBox pictureBoxHelp;
     }
 }
 

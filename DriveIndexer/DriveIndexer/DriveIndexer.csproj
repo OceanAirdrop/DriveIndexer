@@ -61,6 +61,12 @@
     <Compile Include="Database\DBHelper.cs" />
     <Compile Include="Data\DriveData.cs" />
     <Compile Include="Data\FileData.cs" />
+    <Compile Include="Dialogs\AboutBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutBoxForm.Designer.cs">
+      <DependentUpon>AboutBoxForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DatabaseStastics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\AboutBoxForm.resx">
+      <DependentUpon>AboutBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DatabaseStastics.resx">
       <DependentUpon>DatabaseStastics.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,6 +196,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\application.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OceanAirdrop64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OceanAirdrop128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
