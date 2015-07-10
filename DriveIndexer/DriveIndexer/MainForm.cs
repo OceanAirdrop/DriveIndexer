@@ -35,9 +35,9 @@ namespace DriveIndexer
             PopulateListView();
         }
 
-        public void SetupDataGridView(DataGridView dgv)
+        private void SetupDataGridView(DataGridView dgv)
         {
-            // Setting the style of the DataGridView control
+            dgv.RowHeadersVisible = false;
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9, FontStyle.Bold, GraphicsUnit.Point);
             dgv.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.ControlDark;
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -46,7 +46,23 @@ namespace DriveIndexer
             dgv.DefaultCellStyle.BackColor = Color.Empty;
             dgv.CellBorderStyle = DataGridViewCellBorderStyle.Single;
             dgv.AllowUserToAddRows = false;
+                dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //else
+            //    dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
         }
+
+        //public void SetupDataGridView(DataGridView dgv)
+        //{
+        //    // Setting the style of the DataGridView control
+        //    dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Tahoma", 9, FontStyle.Bold, GraphicsUnit.Point);
+        //    dgv.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.ControlDark;
+        //    dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+        //    dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        //    dgv.DefaultCellStyle.Font = new Font("Tahoma", 8, FontStyle.Regular, GraphicsUnit.Point);
+        //    dgv.DefaultCellStyle.BackColor = Color.Empty;
+        //    dgv.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+        //    dgv.AllowUserToAddRows = false;
+        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -182,6 +198,24 @@ namespace DriveIndexer
         private void buttonFileViewer_Click(object sender, EventArgs e)
         {
             FileViewer dlg = new FileViewer();
+            dlg.ShowDialog();
+        }
+
+        private void buttonDatabaseStatistics_Click(object sender, EventArgs e)
+        {
+            DatabaseStastics dlg = new DatabaseStastics();
+            dlg.ShowDialog();
+        }
+
+        private void buttonFileTypes_Click(object sender, EventArgs e)
+        {
+            FileTypeManagerForm dlg = new FileTypeManagerForm();
+            dlg.ShowDialog();
+        }
+
+        private void buttonFileSearch_Click(object sender, EventArgs e)
+        {
+            FileSearch dlg = new FileSearch();
             dlg.ShowDialog();
         }
 

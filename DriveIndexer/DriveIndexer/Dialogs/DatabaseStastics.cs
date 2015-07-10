@@ -16,5 +16,10 @@ namespace DriveIndexer.Dialogs
         {
             InitializeComponent();
         }
+
+        private void DatabaseStastics_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

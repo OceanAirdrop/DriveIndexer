@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace DriveIndexer.Dialogs
 {
-    public partial class FileSearch : Form
+    public partial class FileTypeManagerForm : Form
     {
-        public FileSearch()
+        public FileTypeManagerForm()
         {
             InitializeComponent();
         }
 
-        private void FileSearch_Load(object sender, EventArgs e)
+        private void FileTypeManagerForm_Load(object sender, EventArgs e)
         {
 
         }

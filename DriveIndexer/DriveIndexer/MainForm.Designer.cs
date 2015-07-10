@@ -28,13 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewDrives = new System.Windows.Forms.DataGridView();
-            this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
-            this.buttonIndexFiles = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.buttonFileViewer = new System.Windows.Forms.Button();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,14 +39,22 @@
             this.Partitions = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonFileSearch = new System.Windows.Forms.Button();
+            this.buttonFileViewer = new System.Windows.Forms.Button();
+            this.buttonRefreshDriveInfo = new System.Windows.Forms.Button();
+            this.buttonFileTypes = new System.Windows.Forms.Button();
+            this.buttonIndexFiles = new System.Windows.Forms.Button();
+            this.buttonDatabaseStatistics = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDrives)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 387);
+            this.label1.Location = new System.Drawing.Point(9, 345);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 2;
@@ -71,65 +75,12 @@
             this.Partitions,
             this.DriveSize,
             this.Column3});
-            this.dataGridViewDrives.Location = new System.Drawing.Point(13, 13);
+            this.dataGridViewDrives.Location = new System.Drawing.Point(12, 12);
             this.dataGridViewDrives.Name = "dataGridViewDrives";
-            this.dataGridViewDrives.Size = new System.Drawing.Size(700, 358);
+            this.dataGridViewDrives.Size = new System.Drawing.Size(685, 319);
             this.dataGridViewDrives.TabIndex = 4;
             this.dataGridViewDrives.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellClick);
             this.dataGridViewDrives.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellDoubleClick);
-            // 
-            // buttonRefreshDriveInfo
-            // 
-            this.buttonRefreshDriveInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRefreshDriveInfo.Location = new System.Drawing.Point(719, 13);
-            this.buttonRefreshDriveInfo.Name = "buttonRefreshDriveInfo";
-            this.buttonRefreshDriveInfo.Size = new System.Drawing.Size(118, 50);
-            this.buttonRefreshDriveInfo.TabIndex = 5;
-            this.buttonRefreshDriveInfo.Text = "Refresh Drive Info";
-            this.buttonRefreshDriveInfo.UseVisualStyleBackColor = true;
-            this.buttonRefreshDriveInfo.Click += new System.EventHandler(this.buttonRefreshDriveInfo_Click);
-            // 
-            // buttonIndexFiles
-            // 
-            this.buttonIndexFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonIndexFiles.Location = new System.Drawing.Point(719, 69);
-            this.buttonIndexFiles.Name = "buttonIndexFiles";
-            this.buttonIndexFiles.Size = new System.Drawing.Size(118, 53);
-            this.buttonIndexFiles.TabIndex = 6;
-            this.buttonIndexFiles.Text = "Index Files";
-            this.buttonIndexFiles.UseVisualStyleBackColor = true;
-            this.buttonIndexFiles.Click += new System.EventHandler(this.buttonIndexFiles_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(719, 128);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(118, 53);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Database Statistics";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(719, 187);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(118, 53);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "FileType Blacklist / Whitelist";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // buttonFileViewer
-            // 
-            this.buttonFileViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFileViewer.Location = new System.Drawing.Point(719, 246);
-            this.buttonFileViewer.Name = "buttonFileViewer";
-            this.buttonFileViewer.Size = new System.Drawing.Size(118, 53);
-            this.buttonFileViewer.TabIndex = 9;
-            this.buttonFileViewer.Text = "File Viewer";
-            this.buttonFileViewer.UseVisualStyleBackColor = true;
-            this.buttonFileViewer.Click += new System.EventHandler(this.buttonFileViewer_Click);
             // 
             // Column2
             // 
@@ -175,25 +126,122 @@
             this.Column3.HeaderText = "DriveScannedDate";
             this.Column3.Name = "Column3";
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.buttonFileSearch);
+            this.panel1.Controls.Add(this.dataGridViewDrives);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.buttonFileViewer);
+            this.panel1.Controls.Add(this.buttonRefreshDriveInfo);
+            this.panel1.Controls.Add(this.buttonFileTypes);
+            this.panel1.Controls.Add(this.buttonIndexFiles);
+            this.panel1.Controls.Add(this.buttonDatabaseStatistics);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(849, 367);
+            this.panel1.TabIndex = 10;
+            // 
+            // buttonFileSearch
+            // 
+            this.buttonFileSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFileSearch.Image = global::DriveIndexer.Properties.Resources.scan_drive_24;
+            this.buttonFileSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFileSearch.Location = new System.Drawing.Point(703, 257);
+            this.buttonFileSearch.Name = "buttonFileSearch";
+            this.buttonFileSearch.Size = new System.Drawing.Size(134, 43);
+            this.buttonFileSearch.TabIndex = 11;
+            this.buttonFileSearch.Text = "File Search";
+            this.buttonFileSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonFileSearch.UseVisualStyleBackColor = true;
+            this.buttonFileSearch.Click += new System.EventHandler(this.buttonFileSearch_Click);
+            // 
+            // buttonFileViewer
+            // 
+            this.buttonFileViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFileViewer.Image = global::DriveIndexer.Properties.Resources.fileviewer_24;
+            this.buttonFileViewer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFileViewer.Location = new System.Drawing.Point(703, 208);
+            this.buttonFileViewer.Name = "buttonFileViewer";
+            this.buttonFileViewer.Size = new System.Drawing.Size(134, 43);
+            this.buttonFileViewer.TabIndex = 9;
+            this.buttonFileViewer.Text = "File Viewer";
+            this.buttonFileViewer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonFileViewer.UseVisualStyleBackColor = true;
+            this.buttonFileViewer.Click += new System.EventHandler(this.buttonFileViewer_Click);
+            // 
+            // buttonRefreshDriveInfo
+            // 
+            this.buttonRefreshDriveInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRefreshDriveInfo.Image = global::DriveIndexer.Properties.Resources.refresh2_24;
+            this.buttonRefreshDriveInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRefreshDriveInfo.Location = new System.Drawing.Point(703, 12);
+            this.buttonRefreshDriveInfo.Name = "buttonRefreshDriveInfo";
+            this.buttonRefreshDriveInfo.Size = new System.Drawing.Size(134, 43);
+            this.buttonRefreshDriveInfo.TabIndex = 5;
+            this.buttonRefreshDriveInfo.Text = "Refresh Drive Info";
+            this.buttonRefreshDriveInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonRefreshDriveInfo.UseVisualStyleBackColor = true;
+            this.buttonRefreshDriveInfo.Click += new System.EventHandler(this.buttonRefreshDriveInfo_Click);
+            // 
+            // buttonFileTypes
+            // 
+            this.buttonFileTypes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFileTypes.Image = global::DriveIndexer.Properties.Resources.filetype_24;
+            this.buttonFileTypes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonFileTypes.Location = new System.Drawing.Point(703, 159);
+            this.buttonFileTypes.Name = "buttonFileTypes";
+            this.buttonFileTypes.Size = new System.Drawing.Size(134, 43);
+            this.buttonFileTypes.TabIndex = 8;
+            this.buttonFileTypes.Text = "FileType Manager";
+            this.buttonFileTypes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonFileTypes.UseVisualStyleBackColor = true;
+            this.buttonFileTypes.Click += new System.EventHandler(this.buttonFileTypes_Click);
+            // 
+            // buttonIndexFiles
+            // 
+            this.buttonIndexFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonIndexFiles.Image = global::DriveIndexer.Properties.Resources.harddrive2_24;
+            this.buttonIndexFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonIndexFiles.Location = new System.Drawing.Point(703, 61);
+            this.buttonIndexFiles.Name = "buttonIndexFiles";
+            this.buttonIndexFiles.Size = new System.Drawing.Size(134, 43);
+            this.buttonIndexFiles.TabIndex = 6;
+            this.buttonIndexFiles.Text = "Scan Drive";
+            this.buttonIndexFiles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonIndexFiles.UseVisualStyleBackColor = true;
+            this.buttonIndexFiles.Click += new System.EventHandler(this.buttonIndexFiles_Click);
+            // 
+            // buttonDatabaseStatistics
+            // 
+            this.buttonDatabaseStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDatabaseStatistics.Image = global::DriveIndexer.Properties.Resources.statistics2_24;
+            this.buttonDatabaseStatistics.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDatabaseStatistics.Location = new System.Drawing.Point(703, 110);
+            this.buttonDatabaseStatistics.Name = "buttonDatabaseStatistics";
+            this.buttonDatabaseStatistics.Size = new System.Drawing.Size(134, 43);
+            this.buttonDatabaseStatistics.TabIndex = 7;
+            this.buttonDatabaseStatistics.Text = "Database Statistics";
+            this.buttonDatabaseStatistics.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDatabaseStatistics.UseVisualStyleBackColor = true;
+            this.buttonDatabaseStatistics.Click += new System.EventHandler(this.buttonDatabaseStatistics_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 409);
-            this.Controls.Add(this.buttonFileViewer);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.buttonIndexFiles);
-            this.Controls.Add(this.buttonRefreshDriveInfo);
-            this.Controls.Add(this.dataGridViewDrives);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(849, 367);
+            this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Drive Indexer - By Ocean Airdrop";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDrives)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -203,8 +251,8 @@
         private System.Windows.Forms.DataGridView dataGridViewDrives;
         private System.Windows.Forms.Button buttonRefreshDriveInfo;
         private System.Windows.Forms.Button buttonIndexFiles;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonDatabaseStatistics;
+        private System.Windows.Forms.Button buttonFileTypes;
         private System.Windows.Forms.Button buttonFileViewer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
@@ -214,6 +262,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Partitions;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonFileSearch;
     }
 }
 

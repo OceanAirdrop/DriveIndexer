@@ -73,6 +73,12 @@
     <Compile Include="Dialogs\FileSearch.Designer.cs">
       <DependentUpon>FileSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\FileTypeManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\FileTypeManagerForm.Designer.cs">
+      <DependentUpon>FileTypeManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\FileViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FileSearch.resx">
       <DependentUpon>FileSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\FileTypeManagerForm.resx">
+      <DependentUpon>FileTypeManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FileViewer.resx">
       <DependentUpon>FileViewer.cs</DependentUpon>
@@ -151,6 +160,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\working-40.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filetype-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fileviewer-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh1-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh2-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scan_drive-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\statistics2-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\harddrive2-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

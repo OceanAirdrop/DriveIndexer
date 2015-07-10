@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileViewer));
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -154,7 +155,9 @@
             this.Controls.Add(this.buttonPrevious);
             this.Controls.Add(this.buttonNext);
             this.Controls.Add(this.dataGridViewFiles);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FileViewer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FileViewer";
             this.Load += new System.EventHandler(this.FileViewer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
