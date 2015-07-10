@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBoxForm));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelGithub = new System.Windows.Forms.LinkLabel();
             this.labelBuildDate = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,7 +43,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.linkLabel1);
+            this.panel1.Controls.Add(this.linkLabelGithub);
             this.panel1.Controls.Add(this.labelBuildDate);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
@@ -55,16 +55,17 @@
             this.panel1.Size = new System.Drawing.Size(427, 195);
             this.panel1.TabIndex = 15;
             // 
-            // linkLabel1
+            // linkLabelGithub
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(152, 117);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(220, 18);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "https://github.com/OceanAirdrop";
+            this.linkLabelGithub.AutoSize = true;
+            this.linkLabelGithub.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabelGithub.Location = new System.Drawing.Point(152, 117);
+            this.linkLabelGithub.Name = "linkLabelGithub";
+            this.linkLabelGithub.Size = new System.Drawing.Size(220, 18);
+            this.linkLabelGithub.TabIndex = 6;
+            this.linkLabelGithub.TabStop = true;
+            this.linkLabelGithub.Text = "https://github.com/OceanAirdrop";
+            this.linkLabelGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelGithub_LinkClicked);
             // 
             // labelBuildDate
             // 
@@ -139,7 +140,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabelGithub;
         private System.Windows.Forms.Label labelBuildDate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
