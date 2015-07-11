@@ -141,6 +141,9 @@ namespace DriveIndexer
 
             // Assosiate driveData with this row.
             dgv.Rows[nNewRow].Tag = driveData;
+
+            dgv.Rows[nNewRow].Height = 30;
+
         }
 
         private void buttonIndexFiles_Click(object sender, EventArgs e)

@@ -25,6 +25,7 @@ namespace DriveIndexer.Dialogs
 
         private void FileTypeManagerForm_Load(object sender, EventArgs e)
         {
+            //checkBoxEverything.Hide();
             treeViewFileTypes.Nodes.Clear();
 
             DoubleBuffered = true;
@@ -48,7 +49,10 @@ namespace DriveIndexer.Dialogs
 
         private void treeViewFileTypes_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            labelFileTypes.Text = string.Format("{0} File Types", e.Node.Text);
             AddCheckBoxes(e.Node.Text);
+
+
            
         }
 
@@ -58,27 +62,20 @@ namespace DriveIndexer.Dialogs
 
             List<FileGroupData> list = DBHelper.ReadFileGroupList(true, area);
 
+            bool bAllTicked = true;
+
             foreach (var fileGroup in list)
             {
                 foreach (var fileType in fileGroup.m_fileTypeList)
                 {
                     AddCheckBoxControl(fileType);
-                    //AddCheckBoxControl( string.Format("{0} ({1})",fileType.m_fileType, fileType.m_fileTypeDesc), true);
 
-                    //break;
+                    if (fileType.m_includeInDriveScan == "0")
+                        bAllTicked = false;
                 }
             }
 
-            //AddCheckBoxControl("one", true);
-            //AddCheckBoxControl("two", true);
-            //AddCheckBoxControl("three", false);
-            //AddCheckBoxControl("four", false);
-
-
-            //foreach (var section in ECPManager.currentReport_.sectionList_)
-            //{
-            //    AddCheckBoxControl(section.SectionName, true);
-            //}
+            // checkBoxEverything.Checked = bAllTicked;
         }
 
         private void AddCheckBoxControl(FileTypeData fileType )
@@ -119,8 +116,8 @@ namespace DriveIndexer.Dialogs
 
             string sql = string.Format("UPDATE FileType set IncludeInDriveScan = '{0}' where FileTypeId = '{1}'", Convert.ToInt32(cb.Checked), fileType.m_fileTypeId);
 
-            m_sqlToExecute.Add(sql);
-            //LocalSqllite.ExecSQLCommand(sql);
+            //m_sqlToExecute.Add(sql);
+            LocalSqllite.ExecSQLCommand(sql);
         }
 
         private void checkBoxEverything_CheckedChanged(object sender, EventArgs e)
@@ -134,12 +131,22 @@ namespace DriveIndexer.Dialogs
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            foreach (var sql in m_sqlToExecute)
-            {
-                LocalSqllite.ExecSQLCommand(sql);
-            }
+            //foreach (var sql in m_sqlToExecute)
+            //{
+            //    LocalSqllite.ExecSQLCommand(sql);
+            //}
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

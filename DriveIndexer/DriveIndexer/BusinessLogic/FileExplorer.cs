@@ -20,10 +20,7 @@ namespace DriveIndexer
 
         static IFileExplorerUIManager m_uiManager = null;
 
-        //static System.Collections.Specialized.StringCollection log = new System.Collections.Specialized.StringCollection();
-
         static List<string> m_extensionWhiteList = new List<string>();
-        static List<string> m_extensionBlackList = new List<string>();
 
         public static void Initialise()
         {
@@ -32,42 +29,12 @@ namespace DriveIndexer
             m_uiManager = null;
 
             SetupExtensionWhiteList();
-            SetupExtensionBlackList();
         }
 
         public static void SetupExtensionWhiteList()
         {
-            m_extensionWhiteList.Add(".cs");
-            m_extensionWhiteList.Add(".cpp");
-            m_extensionWhiteList.Add(".h");
-        }
-
-        public static void SetupExtensionBlackList()
-        {
-            m_extensionBlackList.Add(".ini");
-            m_extensionBlackList.Add(".exe");
-            m_extensionBlackList.Add(".dll");
-            m_extensionBlackList.Add(".sys");
-            m_extensionBlackList.Add(".cab");
-            m_extensionBlackList.Add(".msi");
-            m_extensionBlackList.Add(".config");
-            m_extensionBlackList.Add(".pdb");
-            m_extensionBlackList.Add(".xml");
-            m_extensionBlackList.Add(".db");
-            m_extensionBlackList.Add(".manifest");
-            m_extensionBlackList.Add(".fff");
-            m_extensionBlackList.Add(".log");
-            m_extensionBlackList.Add(".Debug");
-            m_extensionBlackList.Add(".Release");
-            m_extensionBlackList.Add(".o");
-            m_extensionBlackList.Add(".pri");
-            m_extensionBlackList.Add(".user");
-            m_extensionBlackList.Add(".qbs");
-            m_extensionBlackList.Add(".svn-base");
-            m_extensionBlackList.Add(".dsp");
-            m_extensionBlackList.Add(".dsw");
-            m_extensionBlackList.Add(".page");
-            m_extensionBlackList.Add(".lnk");
+            m_extensionWhiteList = DBHelper.ReadWhiteListedFileTypes();
+            
         }
 
         public static void InjectUserInterfaceManager(IFileExplorerUIManager ui)
@@ -258,14 +225,7 @@ namespace DriveIndexer
 
         static bool IstExtensionWhiteListed( string ext )
         {
-            //if ( m_extensionWhiteList.Contains( fi.Extension ) == true )
-                   
-            return true;
-        }
-
-        static bool IsExtensionBlackListed(string ext)
-        {
-            if (m_extensionBlackList.Contains(ext) == true)
+            if (m_extensionWhiteList.Contains(ext) == true)
                 return true;
 
             return false;
@@ -312,23 +272,20 @@ namespace DriveIndexer
                             if (bCancelProcess == true)
                                 return;
 
-                            if (IsExtensionBlackListed(fi.Extension) == true)
+                            if (IstExtensionWhiteListed(fi.Extension) == false)
                             {
                                 OutputMessage(string.Format("Skipping File (Blacklisted): {0}", fi.Name));
                                 continue;
                             }
 
-                            if (IstExtensionWhiteListed(fi.Extension) == true)
-                            {
-                                //Console.WriteLine(fi.FullName);
-                                //var x = m_logicalDrive.Name;
-                                //OutputMessage(string.Format("file: {0}", fi.FullName));
+                            //Console.WriteLine(fi.FullName);
+                            //var x = m_logicalDrive.Name;
+                            //OutputMessage(string.Format("file: {0}", fi.FullName));
 
-                                if (DBHelper.WriteFileToDatabase(m_logicalDrive, fi, m_uiManager) == true)
-                                {
-                                    m_indexedFileCount++;
-                                    m_uiManager.OutputFileIndexCount(m_indexedFileCount);
-                                }
+                            if (DBHelper.WriteFileToDatabase(m_logicalDrive, fi, m_uiManager) == true)
+                            {
+                                m_indexedFileCount++;
+                                m_uiManager.OutputFileIndexCount(m_indexedFileCount);
                             }
                         }
                         catch (Exception ex)

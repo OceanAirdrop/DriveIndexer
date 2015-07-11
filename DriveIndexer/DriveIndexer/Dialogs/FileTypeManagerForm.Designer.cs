@@ -41,7 +41,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelFileTypes = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -66,7 +66,7 @@
             this.panel1.Controls.Add(this.label12);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.pictureBox3);
-            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.labelFileTypes);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.pictureBox2);
@@ -81,15 +81,16 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(676, 366);
+            this.panel1.Size = new System.Drawing.Size(712, 391);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // buttonDelFileType
             // 
             this.buttonDelFileType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDelFileType.Image = global::DriveIndexer.Properties.Resources.Button_Close_icon24;
             this.buttonDelFileType.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDelFileType.Location = new System.Drawing.Point(552, 187);
+            this.buttonDelFileType.Location = new System.Drawing.Point(587, 197);
             this.buttonDelFileType.Name = "buttonDelFileType";
             this.buttonDelFileType.Size = new System.Drawing.Size(112, 34);
             this.buttonDelFileType.TabIndex = 104;
@@ -106,7 +107,7 @@
             this.label12.MaximumSize = new System.Drawing.Size(9800, 3);
             this.label12.MinimumSize = new System.Drawing.Size(300, 3);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(676, 3);
+            this.label12.Size = new System.Drawing.Size(712, 3);
             this.label12.TabIndex = 103;
             this.label12.Text = "111";
             // 
@@ -115,7 +116,7 @@
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(581, 19);
+            this.label3.Location = new System.Drawing.Point(617, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 22;
@@ -125,21 +126,21 @@
             // 
             this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.Image = global::DriveIndexer.Properties.Resources.application_32;
-            this.pictureBox3.Location = new System.Drawing.Point(552, 12);
+            this.pictureBox3.Location = new System.Drawing.Point(584, 8);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(37, 33);
             this.pictureBox3.TabIndex = 21;
             this.pictureBox3.TabStop = false;
             // 
-            // label2
+            // labelFileTypes
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(181, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "File Types";
+            this.labelFileTypes.AutoSize = true;
+            this.labelFileTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelFileTypes.Location = new System.Drawing.Point(181, 19);
+            this.labelFileTypes.Name = "labelFileTypes";
+            this.labelFileTypes.Size = new System.Drawing.Size(65, 13);
+            this.labelFileTypes.TabIndex = 20;
+            this.labelFileTypes.Text = "File Types";
             // 
             // pictureBox1
             // 
@@ -174,7 +175,7 @@
             this.buttonAddFileType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddFileType.Image = global::DriveIndexer.Properties.Resources.Button_Add_icon24;
             this.buttonAddFileType.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddFileType.Location = new System.Drawing.Point(552, 146);
+            this.buttonAddFileType.Location = new System.Drawing.Point(587, 156);
             this.buttonAddFileType.Name = "buttonAddFileType";
             this.buttonAddFileType.Size = new System.Drawing.Size(112, 34);
             this.buttonAddFileType.TabIndex = 16;
@@ -187,7 +188,7 @@
             this.buttonDeleteFileGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDeleteFileGroup.Image = global::DriveIndexer.Properties.Resources.folder_delete_icon_24;
             this.buttonDeleteFileGroup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteFileGroup.Location = new System.Drawing.Point(552, 91);
+            this.buttonDeleteFileGroup.Location = new System.Drawing.Point(587, 101);
             this.buttonDeleteFileGroup.Name = "buttonDeleteFileGroup";
             this.buttonDeleteFileGroup.Size = new System.Drawing.Size(112, 34);
             this.buttonDeleteFileGroup.TabIndex = 15;
@@ -200,7 +201,7 @@
             this.buttonAddFileGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddFileGroup.Image = global::DriveIndexer.Properties.Resources.folder_add_icon_24;
             this.buttonAddFileGroup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddFileGroup.Location = new System.Drawing.Point(552, 51);
+            this.buttonAddFileGroup.Location = new System.Drawing.Point(587, 61);
             this.buttonAddFileGroup.Name = "buttonAddFileGroup";
             this.buttonAddFileGroup.Size = new System.Drawing.Size(112, 34);
             this.buttonAddFileGroup.TabIndex = 14;
@@ -213,7 +214,7 @@
             this.checkBoxEverything.AllowDrop = true;
             this.checkBoxEverything.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxEverything.AutoSize = true;
-            this.checkBoxEverything.Location = new System.Drawing.Point(151, 333);
+            this.checkBoxEverything.Location = new System.Drawing.Point(151, 358);
             this.checkBoxEverything.Name = "checkBoxEverything";
             this.checkBoxEverything.Size = new System.Drawing.Size(114, 17);
             this.checkBoxEverything.TabIndex = 11;
@@ -229,16 +230,16 @@
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(152, 51);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(151, 61);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(390, 266);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 269);
             this.flowLayoutPanel1.TabIndex = 10;
             // 
             // treeViewFileTypes
             // 
             this.treeViewFileTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewFileTypes.Location = new System.Drawing.Point(12, 51);
+            this.treeViewFileTypes.Location = new System.Drawing.Point(11, 61);
             this.treeViewFileTypes.Name = "treeViewFileTypes";
             treeNode1.Name = "Everything";
             treeNode1.Text = "Everything";
@@ -269,17 +270,18 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(589, 329);
+            this.buttonCancel.Location = new System.Drawing.Point(625, 354);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(508, 329);
+            this.buttonOK.Location = new System.Drawing.Point(544, 354);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -291,7 +293,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(676, 366);
+            this.ClientSize = new System.Drawing.Size(712, 391);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FileTypeManagerForm";
@@ -320,7 +322,7 @@
         private System.Windows.Forms.Button buttonAddFileGroup;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelFileTypes;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox2;

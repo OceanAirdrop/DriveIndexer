@@ -55,6 +55,28 @@ namespace DriveIndexer
             return list;
         }
 
+
+        public static List<string> ReadWhiteListedFileTypes()
+        {
+            List<string> list = new List<string>();
+
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand("select FileType from FileType where IncludeInDriveScan = 1", LocalSqllite.m_sqlLiteConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(reader["FileType"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return list;
+        }
+
         public static List<FileGroupData> ReadFileGroupList( bool bIncludeData, string filterOnName )
         {
             List<FileGroupData> list = new List<FileGroupData>();
@@ -478,7 +500,7 @@ namespace DriveIndexer
             string sqlTemplate = "INSERT OR IGNORE INTO FileGroup ( FileGroupName ) VALUES ( '{0}' ); SELECT last_insert_rowid()";
 
             List<string> defaultFileGroups = new List<string>();
-            defaultFileGroups.Add("Everything");
+            //defaultFileGroups.Add("Everything");
             defaultFileGroups.Add("Documents");
             defaultFileGroups.Add("Spreadsheet");
             defaultFileGroups.Add("Ebook");
@@ -491,6 +513,8 @@ namespace DriveIndexer
             defaultFileGroups.Add("System");
             defaultFileGroups.Add("Compressed");
             defaultFileGroups.Add("Executable");
+            defaultFileGroups.Add("Unknown");
+
 
             foreach( var fileGroup in defaultFileGroups)
             {
@@ -501,7 +525,7 @@ namespace DriveIndexer
                 List<FileTypeData> fileTypes = SetupDefaultFileTypes(fileGroup);
                 foreach (var type in fileTypes)
                 {
-                    string sqlFileType = string.Format("INSERT OR IGNORE INTO FileType ( FileGroupId, FileType, FileTypeDesc ) VALUES ( '{0}', '{1}', '{2}' );", id, type.m_fileType, type.m_fileTypeDesc);
+                    string sqlFileType = string.Format("INSERT OR IGNORE INTO FileType ( FileGroupId, FileType, FileTypeDesc, IncludeInDriveScan ) VALUES ( '{0}', '{1}', '{2}', '1' );", id, type.m_fileType, type.m_fileTypeDesc);
                     LocalSqllite.ExecSQLCommand(sqlFileType);
                     Console.WriteLine(sqlFileType);
                 }
@@ -565,4 +589,5 @@ namespace DriveIndexer
 
     }
 }
+
 
