@@ -188,8 +188,8 @@ namespace OceanAirdrop
                 sb.Append("FileTypeId integer primary key autoincrement, ");
                 sb.Append("FileGroupId integer,");                      // Links to FileGroupTable
                 sb.Append("FileType text, ");                          //  .txt / .doc / etc
-                sb.Append("FileTypeDesc text); ");                          //  .txt / .doc / etc
-
+                sb.Append("FileTypeDesc text,");                          //  .txt / .doc / etc
+                sb.Append("IncludeInDriveScan integer); ");                          //  .txt / .doc / etc
                 ExecSQLCommand(sb.ToString());
             }
             catch (Exception ex)

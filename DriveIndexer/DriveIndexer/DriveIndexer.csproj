@@ -239,6 +239,18 @@
   <ItemGroup>
     <None Include="Resources\tick-24.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-add-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-delete-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Add-icon24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Close-icon24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

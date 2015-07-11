@@ -127,9 +127,9 @@ namespace DriveIndexer
             int nColCount = 0;
 
             if (driveData.DriveScanned == "0" || driveData.DriveScanned == "") // ugly!! 
-                dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.delete_24;
+                dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.Button_Close_icon24;
             else
-                dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.tick_24;
+                dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.Button_Add_icon24;
 
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.UserComment;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.SerialNumber;

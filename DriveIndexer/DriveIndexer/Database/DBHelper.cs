@@ -55,6 +55,71 @@ namespace DriveIndexer
             return list;
         }
 
+        public static List<FileGroupData> ReadFileGroupList( bool bIncludeData, string filterOnName )
+        {
+            List<FileGroupData> list = new List<FileGroupData>();
+
+            try
+            {
+                string sql = "select FileGroupId, FileGroupName FROM FileGroup";
+                SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    FileGroupData data = new FileGroupData();
+                    data.m_fileGroupId = reader["FileGroupId"].ToString();
+                    data.m_fileGroupName = reader["FileGroupName"].ToString();
+
+                    if (string.IsNullOrEmpty(filterOnName) == false)
+                    {
+                        // this is a filter setup!
+                        if (data.m_fileGroupName.ToLower() != filterOnName.ToLower())
+                            continue;
+                    }
+
+                    if (bIncludeData == true )
+                        data.m_fileTypeList = ReadFileTypeList(data.m_fileGroupId);
+
+                    list.Add(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return list;
+        }
+
+        public static List<FileTypeData> ReadFileTypeList(string fileGroupId)
+        {
+            List<FileTypeData> list = new List<FileTypeData>();
+
+            try
+            {
+                string sql = string.Format("select FileTypeId, FileGroupId, FileType, FileTypeDesc, ifnull(IncludeInDriveScan,0) as IncludeInDriveScan FROM FileType where FileGroupId = '{0}'", fileGroupId);
+                SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    FileTypeData data = new FileTypeData();
+                    data.m_fileTypeId = reader["FileTypeId"].ToString();
+                    data.m_fileGroupId = reader["FileGroupId"].ToString();
+                    data.m_fileType = reader["FileType"].ToString();
+                    data.m_fileTypeDesc = reader["FileTypeDesc"].ToString();
+                    data.m_includeInDriveScan = reader["IncludeInDriveScan"].ToString();
+                    
+                    list.Add(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return list;
+        }
+
         public static List<PhysicalDriveData> ReadDriveList()
         {
             List<PhysicalDriveData> list = new List<PhysicalDriveData>();
@@ -419,10 +484,10 @@ namespace DriveIndexer
             defaultFileGroups.Add("Ebook");
             defaultFileGroups.Add("Code");
             defaultFileGroups.Add("Movies");
-            defaultFileGroups.Add("Music");
+            defaultFileGroups.Add("Audio");
             defaultFileGroups.Add("Games");
             defaultFileGroups.Add("Image");
-            defaultFileGroups.Add("Web");
+            //defaultFileGroups.Add("Web");
             defaultFileGroups.Add("System");
             defaultFileGroups.Add("Compressed");
             defaultFileGroups.Add("Executable");

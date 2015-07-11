@@ -103,6 +103,26 @@ namespace DriveIndexer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Button_Add_icon24 {
+            get {
+                object obj = ResourceManager.GetObject("Button_Add_icon24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Button_Close_icon24 {
+            get {
+                object obj = ResourceManager.GetObject("Button_Close_icon24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete_24 {
             get {
                 object obj = ResourceManager.GetObject("delete_24", resourceCulture);
@@ -126,6 +146,26 @@ namespace DriveIndexer.Properties {
         internal static System.Drawing.Bitmap fileviewer_24 {
             get {
                 object obj = ResourceManager.GetObject("fileviewer_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_add_icon_24 {
+            get {
+                object obj = ResourceManager.GetObject("folder_add_icon_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder_delete_icon_24 {
+            get {
+                object obj = ResourceManager.GetObject("folder_delete_icon_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
