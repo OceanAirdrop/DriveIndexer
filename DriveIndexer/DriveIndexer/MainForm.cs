@@ -126,14 +126,11 @@ namespace DriveIndexer
             int nNewRow = dgv.Rows.Add();
             int nColCount = 0;
 
-            dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.tick_24;
+            if (driveData.DriveScanned == "0" || driveData.DriveScanned == "") // ugly!! 
+                dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.delete_24;
+            else
+                dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.tick_24;
 
-            //if (driveData.DriveScanned == "0" || driveData.DriveScanned == "" )           
-            //    dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.delete_24;
-            //else
-            //    dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.tick_24;
-
-            //dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.DriveScanned;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.UserComment;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.SerialNumber;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Model;

@@ -59,8 +59,23 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\IFileExplorerUIManager.cs" />
     <Compile Include="Database\DBHelper.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesAudio.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesCode.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesCompressed.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesDatabase.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesEbook.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesExecutable.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesGame.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesImage.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesSpreadsheet.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesSystem.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesText.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesVideo.cs" />
+    <Compile Include="DefaultFileTypes\DefaultFileTypesWeb.cs" />
+    <Compile Include="Data\DBTableInfo.cs" />
     <Compile Include="Data\DriveData.cs" />
     <Compile Include="Data\FileData.cs" />
+    <Compile Include="Data\FileTypeData.cs" />
     <Compile Include="Dialogs\AboutBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>

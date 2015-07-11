@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SQLite;
 using System.IO;
+using DriveIndexer;
 
 namespace OceanAirdrop
 {
@@ -84,9 +85,11 @@ namespace OceanAirdrop
 
                 // now create schema
                 CreateSQLLiteSchema();
+                DBHelper.SetupDefaultFileGroups();
             }
             else
                 ConnectToDatabase();
+
         }
 
         public static void CreateSQLLiteSchema()
@@ -184,7 +187,8 @@ namespace OceanAirdrop
                 sb.Append("create table FileType ( ");
                 sb.Append("FileTypeId integer primary key autoincrement, ");
                 sb.Append("FileGroupId integer,");                      // Links to FileGroupTable
-                sb.Append("FileType text); ");                          //  .txt / .doc / etc
+                sb.Append("FileType text, ");                          //  .txt / .doc / etc
+                sb.Append("FileTypeDesc text); ");                          //  .txt / .doc / etc
 
                 ExecSQLCommand(sb.ToString());
             }

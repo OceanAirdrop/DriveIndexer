@@ -79,7 +79,7 @@
             this.Column3});
             this.dataGridViewDrives.Location = new System.Drawing.Point(12, 12);
             this.dataGridViewDrives.Name = "dataGridViewDrives";
-            this.dataGridViewDrives.Size = new System.Drawing.Size(685, 319);
+            this.dataGridViewDrives.Size = new System.Drawing.Size(599, 319);
             this.dataGridViewDrives.TabIndex = 4;
             this.dataGridViewDrives.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellClick);
             this.dataGridViewDrives.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewDrives_CellDoubleClick);
@@ -145,14 +145,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(849, 367);
+            this.panel1.Size = new System.Drawing.Size(763, 367);
             this.panel1.TabIndex = 10;
             // 
             // pictureBoxHelp
             // 
             this.pictureBoxHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxHelp.Image = global::DriveIndexer.Properties.Resources.help16;
-            this.pictureBoxHelp.Location = new System.Drawing.Point(822, 344);
+            this.pictureBoxHelp.Location = new System.Drawing.Point(736, 344);
             this.pictureBoxHelp.Name = "pictureBoxHelp";
             this.pictureBoxHelp.Size = new System.Drawing.Size(23, 20);
             this.pictureBoxHelp.TabIndex = 12;
@@ -164,7 +164,7 @@
             this.buttonFileSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFileSearch.Image = global::DriveIndexer.Properties.Resources.scan_drive_24;
             this.buttonFileSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFileSearch.Location = new System.Drawing.Point(703, 257);
+            this.buttonFileSearch.Location = new System.Drawing.Point(617, 257);
             this.buttonFileSearch.Name = "buttonFileSearch";
             this.buttonFileSearch.Size = new System.Drawing.Size(134, 43);
             this.buttonFileSearch.TabIndex = 11;
@@ -178,7 +178,7 @@
             this.buttonFileViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFileViewer.Image = global::DriveIndexer.Properties.Resources.fileviewer_24;
             this.buttonFileViewer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFileViewer.Location = new System.Drawing.Point(703, 208);
+            this.buttonFileViewer.Location = new System.Drawing.Point(617, 208);
             this.buttonFileViewer.Name = "buttonFileViewer";
             this.buttonFileViewer.Size = new System.Drawing.Size(134, 43);
             this.buttonFileViewer.TabIndex = 9;
@@ -192,7 +192,7 @@
             this.buttonRefreshDriveInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRefreshDriveInfo.Image = global::DriveIndexer.Properties.Resources.refresh2_24;
             this.buttonRefreshDriveInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRefreshDriveInfo.Location = new System.Drawing.Point(703, 12);
+            this.buttonRefreshDriveInfo.Location = new System.Drawing.Point(617, 12);
             this.buttonRefreshDriveInfo.Name = "buttonRefreshDriveInfo";
             this.buttonRefreshDriveInfo.Size = new System.Drawing.Size(134, 43);
             this.buttonRefreshDriveInfo.TabIndex = 5;
@@ -206,7 +206,7 @@
             this.buttonFileTypes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFileTypes.Image = global::DriveIndexer.Properties.Resources.filetype_24;
             this.buttonFileTypes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonFileTypes.Location = new System.Drawing.Point(703, 159);
+            this.buttonFileTypes.Location = new System.Drawing.Point(617, 159);
             this.buttonFileTypes.Name = "buttonFileTypes";
             this.buttonFileTypes.Size = new System.Drawing.Size(134, 43);
             this.buttonFileTypes.TabIndex = 8;
@@ -220,7 +220,7 @@
             this.buttonIndexFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonIndexFiles.Image = global::DriveIndexer.Properties.Resources.harddrive2_24;
             this.buttonIndexFiles.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonIndexFiles.Location = new System.Drawing.Point(703, 61);
+            this.buttonIndexFiles.Location = new System.Drawing.Point(617, 61);
             this.buttonIndexFiles.Name = "buttonIndexFiles";
             this.buttonIndexFiles.Size = new System.Drawing.Size(134, 43);
             this.buttonIndexFiles.TabIndex = 6;
@@ -234,7 +234,7 @@
             this.buttonDatabaseStatistics.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDatabaseStatistics.Image = global::DriveIndexer.Properties.Resources.statistics2_24;
             this.buttonDatabaseStatistics.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDatabaseStatistics.Location = new System.Drawing.Point(703, 110);
+            this.buttonDatabaseStatistics.Location = new System.Drawing.Point(617, 110);
             this.buttonDatabaseStatistics.Name = "buttonDatabaseStatistics";
             this.buttonDatabaseStatistics.Size = new System.Drawing.Size(134, 43);
             this.buttonDatabaseStatistics.TabIndex = 7;
@@ -247,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 367);
+            this.ClientSize = new System.Drawing.Size(763, 367);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";

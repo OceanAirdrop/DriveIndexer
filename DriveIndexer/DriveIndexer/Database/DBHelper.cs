@@ -1,4 +1,6 @@
-﻿using OceanAirdrop;
+﻿using DriveIndexer.Data;
+using DriveIndexer.Database;
+using OceanAirdrop;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -12,6 +14,47 @@ namespace DriveIndexer
 {
     public static class DBHelper
     {
+        public static string DateToDBDateTime(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        public static string DateToDBDate(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd");
+        }
+
+        public static List<DBTableInfo> GetTableInfo(string tableName)
+        {
+            List<DBTableInfo> list = new List<DBTableInfo>();
+
+            try
+            {
+                string sql = string.Format("PRAGMA table_info({0});", tableName);
+
+                SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    DBTableInfo data = new DBTableInfo();
+                    data.m_cid = reader["cid"].ToString();
+                    data.m_columnName = reader["name"].ToString();
+                    data.m_columnType = reader["type"].ToString();
+                    data.m_defaultValue = reader["notnull"].ToString();
+                    data.m_notNull = reader["dflt_value"].ToString();
+                    data.m_primaryKey = reader["pk"].ToString();
+
+                    list.Add(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return list;
+        }
+
         public static List<PhysicalDriveData> ReadDriveList()
         {
             List<PhysicalDriveData> list = new List<PhysicalDriveData>();
@@ -364,6 +407,97 @@ namespace DriveIndexer
 
             return LocalSqllite.ExecSQLCommand(sql);
         }
+
+        public static void SetupDefaultFileGroups()
+        {
+            string sqlTemplate = "INSERT OR IGNORE INTO FileGroup ( FileGroupName ) VALUES ( '{0}' ); SELECT last_insert_rowid()";
+
+            List<string> defaultFileGroups = new List<string>();
+            defaultFileGroups.Add("Everything");
+            defaultFileGroups.Add("Documents");
+            defaultFileGroups.Add("Spreadsheet");
+            defaultFileGroups.Add("Ebook");
+            defaultFileGroups.Add("Code");
+            defaultFileGroups.Add("Movies");
+            defaultFileGroups.Add("Music");
+            defaultFileGroups.Add("Games");
+            defaultFileGroups.Add("Image");
+            defaultFileGroups.Add("Web");
+            defaultFileGroups.Add("System");
+            defaultFileGroups.Add("Compressed");
+            defaultFileGroups.Add("Executable");
+
+            foreach( var fileGroup in defaultFileGroups)
+            {
+                string sql = string.Format(sqlTemplate, fileGroup);
+
+                string id = LocalSqllite.ExecSQLCommandScalar(sql);
+
+                List<FileTypeData> fileTypes = SetupDefaultFileTypes(fileGroup);
+                foreach (var type in fileTypes)
+                {
+                    string sqlFileType = string.Format("INSERT OR IGNORE INTO FileType ( FileGroupId, FileType, FileTypeDesc ) VALUES ( '{0}', '{1}', '{2}' );", id, type.m_fileType, type.m_fileTypeDesc);
+                    LocalSqllite.ExecSQLCommand(sqlFileType);
+                    Console.WriteLine(sqlFileType);
+                }
+            }
+        }
+
+        public static List<FileTypeData> SetupDefaultFileTypes(string fileGroup)
+        {
+            // http://fileinfo.com/filetypes/common
+            List<FileTypeData> fileTypes = new List<FileTypeData>();
+
+            switch (fileGroup)
+            {
+                case "Documents":
+                    return DefaultFileTypesText.DefaultTypes();
+                    break;
+                case "Spreadsheet":
+                    return DefaultFileTypesSpreadsheet.DefaultTypes();
+                    break;
+                case "Ebook":
+                    return DefaulFileTypesEbook.DefaultTypes();
+                    break;
+                case "Code":
+                    return DefaultFileTypesCode.DefaultTypes();
+                    break;
+                case "Movies":
+                    return DefaultFileTypesVideo.DefaultTypes();
+                    break;
+                case "Audio":
+                    return DefaulFileTypesAudio.DefaultTypes();
+                    break;
+                case "Image":
+                    return DefaultFileTypesImage.DefaultTypes();
+                    break;
+                case "Database":
+                    return DefaultFileTypesDatabase.DefaultTypes();
+                    break;
+                case "Web":
+                    return DefaultFileTypesWeb.DefaultTypes();
+                    break;
+                case "Compressed":
+                    return DefaultFileTypesCompressed.DefaultTypes();
+                    break;
+                case "Games":
+                    return DefaultFileTypesGame.DefaultTypes();
+                    break;
+                case "System":
+                    return DefaultFileTypesSystem.DefaultTypes();
+                    break;
+                case "Executable":
+                    return DefaultFileTypesSystem.DefaultTypes();
+                    break;
+
+                default:
+                    break;
+            }
+
+            return fileTypes;
+        }
+
+
     }
 }
 
