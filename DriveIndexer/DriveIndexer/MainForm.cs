@@ -85,8 +85,7 @@ namespace DriveIndexer
                 if ( driveId == "")
                 {
                     // this is a new drive we have not seen before! Lets get a label/description for it.
-                    LabelNewDrive dlg = new LabelNewDrive();
-                    dlg.m_driveData = drive;
+                    LabelNewDrive dlg = new LabelNewDrive(drive);
 
                     if ( dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK )
                     {
@@ -97,7 +96,7 @@ namespace DriveIndexer
             }
 
             // Add the current drives to the sqllite database
-            DBHelper.PopulatePhyicalDriveTable(currentDrives);
+            //DBHelper.PopulatePhyicalDriveList(currentDrives);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -126,7 +125,15 @@ namespace DriveIndexer
         {
             int nNewRow = dgv.Rows.Add();
             int nColCount = 0;
-            dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.DriveScanned;
+
+            dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.tick_24;
+
+            //if (driveData.DriveScanned == "0" || driveData.DriveScanned == "" )           
+            //    dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.delete_24;
+            //else
+            //    dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.tick_24;
+
+            //dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.DriveScanned;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.UserComment;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.SerialNumber;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Model;
@@ -178,7 +185,18 @@ namespace DriveIndexer
 
         private void dataGridViewDrives_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+                return;
 
+            var data = (PhysicalDriveData)dataGridViewDrives.Rows[e.RowIndex].Tag;
+
+            LabelNewDrive dlg = new LabelNewDrive(data);
+    
+            dlg.ShowDialog();
+            //if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    drive.UserComment = dlg.m_userDescription;
+            //}//
         }
 
         private void dataGridViewDrives_CellClick(object sender, DataGridViewCellEventArgs e)

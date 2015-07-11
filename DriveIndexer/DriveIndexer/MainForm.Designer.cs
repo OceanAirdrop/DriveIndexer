@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewDrives = new System.Windows.Forms.DataGridView();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveSerialNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DriveModel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -88,6 +88,8 @@
             // 
             this.Column2.HeaderText = "DriveScanned";
             this.Column2.Name = "Column2";
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // Column1
             // 
@@ -148,6 +150,7 @@
             // 
             // pictureBoxHelp
             // 
+            this.pictureBoxHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxHelp.Image = global::DriveIndexer.Properties.Resources.help16;
             this.pictureBoxHelp.Location = new System.Drawing.Point(822, 344);
             this.pictureBoxHelp.Name = "pictureBoxHelp";
@@ -268,7 +271,10 @@
         private System.Windows.Forms.Button buttonDatabaseStatistics;
         private System.Windows.Forms.Button buttonFileTypes;
         private System.Windows.Forms.Button buttonFileViewer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button buttonFileSearch;
+        private System.Windows.Forms.PictureBox pictureBoxHelp;
+        private System.Windows.Forms.DataGridViewImageColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveSerialNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveModel;
@@ -276,9 +282,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Partitions;
         private System.Windows.Forms.DataGridViewTextBoxColumn DriveSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button buttonFileSearch;
-        private System.Windows.Forms.PictureBox pictureBoxHelp;
     }
 }
 

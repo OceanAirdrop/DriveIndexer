@@ -87,24 +87,37 @@ namespace DriveIndexer
             return list;
         }
 
-        public static void PopulatePhyicalDriveTable( List<PhysicalDriveData> driveList )
+        public static void PopulatePhyicalDrive(PhysicalDriveData drive)
+        {
+            try
+            {
+                // check if we have already seen this drive! 
+                string sql = WritePhysicalDriveToDatabase(drive);
+                LocalSqllite.ExecSQLCommand(sql);
+
+                string driveId = CheckDriveIdExists(drive);
+
+                foreach (var drivePartition in drive.m_drivePartitions)
+                {
+                    sql = WritePartitionDataToDatabase(driveId, drivePartition);
+                    LocalSqllite.ExecSQLCommand(sql);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        public static void PopulatePhyicalDriveList( List<PhysicalDriveData> driveList )
         {
             try
             {
                 string sql = "";
                 foreach (var drive in driveList)
                 {
-                    // check if we have already seen this drive! 
-                    sql = WritePhysicalDriveToDatabase(drive);
-                    LocalSqllite.ExecSQLCommand(sql);
-
-                    string driveId = CheckDriveIdExists(drive);
-
-                    foreach (var drivePartition in drive.m_drivePartitions)
-                    {
-                        sql = WritePartitionDataToDatabase(driveId, drivePartition);
-                        LocalSqllite.ExecSQLCommand(sql);
-                    }
+                    PopulatePhyicalDrive(drive);
                 }
             }
             catch (Exception ex)

@@ -19,9 +19,15 @@ namespace DriveIndexer
         public string Size { get; set; }                // 320070320640
         public string UserComment { get; set; }         // ?
         public string DriveScanned { get; set; }        // ?
-        public string DriveScannedDate { get; set; }     // ?
+        public string DriveScannedDate { get; set; }    // ?
         
         public List<DrivePartitionData> m_drivePartitions = new List<DrivePartitionData>();
+
+        public PhysicalDriveData()
+        {
+            Size = SerialNumber = Partitions = Model = MediaType = Manufacturer = InterfaceType = UserComment = Caption = DriveId = DriveScannedDate = DriveScanned = "";
+            DriveScanned = "0";
+        }
     }
 
     public class DrivePartitionData

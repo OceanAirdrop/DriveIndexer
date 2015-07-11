@@ -15,9 +15,11 @@ namespace DriveIndexer.Dialogs
         public PhysicalDriveData m_driveData = null;
         public string m_userDescription = "";
 
-        public LabelNewDrive()
+        public LabelNewDrive( PhysicalDriveData data )
         {
             InitializeComponent();
+
+            m_driveData = data;
         }
 
         private void LabelNewDrive_Load(object sender, EventArgs e)
@@ -28,26 +30,45 @@ namespace DriveIndexer.Dialogs
             textBoxType.Text = m_driveData.InterfaceType;
             textBoxSize.Text = m_driveData.Size;
 
-            if (m_driveData.InterfaceType == "IDE")
+            int count = 0;
+            foreach (var drivePartition in m_driveData.m_drivePartitions)
             {
-                textBoxUserDescription.Text = "Internal computer harddisk";
-            }
-            else
-            {
-                foreach (var drivePartition in m_driveData.m_drivePartitions)
+                if (string.IsNullOrEmpty(drivePartition.Name) == false)
                 {
-                    if (string.IsNullOrEmpty(drivePartition.Name) == false)
-                    {
-                        textBoxUserDescription.Text = drivePartition.Name;
-                        break;
-                    }
+                    if (count > 0)
+                        textBoxUserDescription.Text += " | ";
+
+                    textBoxUserDescription.Text += drivePartition.Name;
+
+                    count++;
                 }
+
             }
+
+            //if (m_driveData.InterfaceType == "IDE")
+            //{
+            //    textBoxUserDescription.Text = "Internal computer harddisk";
+            //}
+            //else
+            //{
+            //    foreach (var drivePartition in m_driveData.m_drivePartitions)
+            //    {
+            //        if (string.IsNullOrEmpty(drivePartition.Name) == false)
+            //        {
+            //            textBoxUserDescription.Text = drivePartition.Name;
+            //            break;
+            //        }
+            //    }
+            //}
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             m_userDescription = textBoxUserDescription.Text;
+
+            m_driveData.UserComment = textBoxUserDescription.Text;
+
+            DBHelper.PopulatePhyicalDrive(m_driveData);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
