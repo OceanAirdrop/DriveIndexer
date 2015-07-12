@@ -273,7 +273,7 @@ namespace DriveIndexer
         {
             try
             {
-                string sql = "";
+                //string sql = "";
                 foreach (var drive in driveList)
                 {
                     PopulatePhyicalDrive(drive);
@@ -573,41 +573,28 @@ namespace DriveIndexer
             {
                 case "Documents":
                     return DefaultFileTypesText.DefaultTypes();
-                    break;
                 case "Spreadsheet":
                     return DefaultFileTypesSpreadsheet.DefaultTypes();
-                    break;
                 case "Ebook":
                     return DefaulFileTypesEbook.DefaultTypes();
-                    break;
                 case "Code":
                     return DefaultFileTypesCode.DefaultTypes();
-                    break;
                 case "Movies":
                     return DefaultFileTypesVideo.DefaultTypes();
-                    break;
                 case "Audio":
                     return DefaulFileTypesAudio.DefaultTypes();
-                    break;
                 case "Image":
                     return DefaultFileTypesImage.DefaultTypes();
-                    break;
                 case "Database":
                     return DefaultFileTypesDatabase.DefaultTypes();
-                    break;
                 case "Compressed":
                     return DefaultFileTypesCompressed.DefaultTypes();
-                    break;
                 case "Games":
                     return DefaultFileTypesGame.DefaultTypes();
-                    break;
                 case "System":
                     return DefaultFileTypesSystem.DefaultTypes();
-                    break;
                 case "Executable":
                     return DefaultFileTypesExecutable.DefaultTypes();
-                    break;
-
                 default:
                     break;
             }

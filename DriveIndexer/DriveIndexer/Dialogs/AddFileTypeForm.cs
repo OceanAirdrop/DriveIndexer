@@ -24,10 +24,24 @@ namespace DriveIndexer.Dialogs
 
         private void AddFileTypeForm_Load(object sender, EventArgs e)
         {
+            PopulateListBox();
+        }
+
+        private void PopulateListBox()
+        {
+            listBoxTypes.Items.Clear();
             var list = SetupDefaultFileTypes(m_groupSelected);
-            foreach( var type in list )
+            foreach (var type in list)
             {
-                listBoxTypes.Items.Add(string.Format("{0}\t({1})", type.m_fileType, type.m_fileTypeDesc));
+                if (string.IsNullOrEmpty(textBoxSearchTypes.Text) == true)
+                {
+                    listBoxTypes.Items.Add(string.Format("{0}\t\t({1})", type.m_fileType, type.m_fileTypeDesc));
+                }
+                else
+                {
+                    if ( type.m_fileType.Contains(textBoxSearchTypes.Text) == true )
+                        listBoxTypes.Items.Add(string.Format("{0}\t\t({1})", type.m_fileType, type.m_fileTypeDesc));
+                }
             }
         }
 
@@ -39,46 +53,38 @@ namespace DriveIndexer.Dialogs
             {
                 case "Documents":
                     return DefaultFileTypesText.AllKnownTypes();
-                    break;
                 case "Spreadsheet":
                     return DefaultFileTypesSpreadsheet.AllKnownTypes();
-                    break;
                 case "Ebook":
                     return DefaulFileTypesEbook.AllKnownTypes();
-                    break;
                 case "Code":
                     return DefaultFileTypesCode.AllKnownTypes();
-                    break;
                 case "Movies":
                     return DefaultFileTypesVideo.AllKnownTypes();
-                    break;
                 case "Audio":
                     return DefaulFileTypesAudio.AllKnownTypes();
-                    break;
                 case "Image":
                     return DefaultFileTypesImage.AllKnownTypes();
-                    break;
                 case "Database":
                     return DefaultFileTypesDatabase.AllKnownTypes();
-                    break;
                 case "Compressed":
                     return DefaultFileTypesCompressed.AllKnownTypes();
-                    break;
                 case "Games":
                     return DefaultFileTypesGame.AllKnownTypes();
-                    break;
                 case "System":
                     return DefaultFileTypesSystem.AllKnownTypes();
-                    break;
                 case "Executable":
                     return DefaultFileTypesExecutable.AllKnownTypes();
-                    break;
-
                 default:
                     break;
             }
 
             return fileTypes;
+        }
+
+        private void textBoxSearchTypes_TextChanged(object sender, EventArgs e)
+        {
+            PopulateListBox();
         }
     }
 }

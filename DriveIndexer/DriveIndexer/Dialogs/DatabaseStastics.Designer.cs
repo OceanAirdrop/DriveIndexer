@@ -29,43 +29,43 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseStastics));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelTotalNumberOfFiles = new System.Windows.Forms.Label();
+            this.labelTotalDriveSpace = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.labelTotalImages = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.labelTotalMusic = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.labelTotalMovies = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.labelTotalDocuments = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.labelFileTypes = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // labelTotalNumberOfFiles
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Total Number of Files";
+            this.labelTotalNumberOfFiles.AutoSize = true;
+            this.labelTotalNumberOfFiles.Location = new System.Drawing.Point(36, 29);
+            this.labelTotalNumberOfFiles.Name = "labelTotalNumberOfFiles";
+            this.labelTotalNumberOfFiles.Size = new System.Drawing.Size(107, 13);
+            this.labelTotalNumberOfFiles.TabIndex = 0;
+            this.labelTotalNumberOfFiles.Text = "Total Number of Files";
             // 
-            // label2
+            // labelTotalDriveSpace
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 212);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(171, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Total Disk Space Across All Drives";
+            this.labelTotalDriveSpace.AutoSize = true;
+            this.labelTotalDriveSpace.Location = new System.Drawing.Point(36, 212);
+            this.labelTotalDriveSpace.Name = "labelTotalDriveSpace";
+            this.labelTotalDriveSpace.Size = new System.Drawing.Size(171, 13);
+            this.labelTotalDriveSpace.TabIndex = 1;
+            this.labelTotalDriveSpace.Text = "Total Disk Space Across All Drives";
             // 
             // label3
             // 
@@ -80,100 +80,62 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.labelTotalImages);
             this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.label14);
+            this.panel1.Controls.Add(this.labelTotalMusic);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.labelTotalMovies);
             this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.labelTotalDocuments);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.labelFileTypes);
             this.panel1.Controls.Add(this.buttonCancel);
             this.panel1.Controls.Add(this.buttonOK);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.labelTotalNumberOfFiles);
+            this.panel1.Controls.Add(this.labelTotalDriveSpace);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(420, 322);
+            this.panel1.Size = new System.Drawing.Size(497, 356);
             this.panel1.TabIndex = 4;
             // 
-            // buttonCancel
+            // label11
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(333, 285);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 1;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(310, 189);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(117, 13);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "Total Size of All Images";
             // 
-            // buttonOK
+            // labelTotalImages
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(252, 285);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 0;
-            this.buttonOK.Text = "OK";
-            this.buttonOK.UseVisualStyleBackColor = true;
+            this.labelTotalImages.AutoSize = true;
+            this.labelTotalImages.Location = new System.Drawing.Point(37, 189);
+            this.labelTotalImages.Name = "labelTotalImages";
+            this.labelTotalImages.Size = new System.Drawing.Size(120, 13);
+            this.labelTotalImages.TabIndex = 13;
+            this.labelTotalImages.Text = "Total Number of Images";
             // 
-            // label5
+            // label13
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(36, 53);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(134, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Total Number of File Types";
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(310, 166);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(111, 13);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Total Size of All Music";
             // 
-            // label6
+            // labelTotalMusic
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(36, 75);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(189, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Total Number of Unknown Files Found";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(36, 119);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(140, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Total Number of Documents";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(222, 119);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(137, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Total Size of All Documents";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(222, 142);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(117, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Total Size of All Movies";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(36, 142);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(120, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Total Number of Movies";
+            this.labelTotalMusic.AutoSize = true;
+            this.labelTotalMusic.Location = new System.Drawing.Point(37, 166);
+            this.labelTotalMusic.Name = "labelTotalMusic";
+            this.labelTotalMusic.Size = new System.Drawing.Size(114, 13);
+            this.labelTotalMusic.TabIndex = 11;
+            this.labelTotalMusic.Text = "Total Number of Music";
             // 
             // label10
             // 
@@ -184,47 +146,87 @@
             this.label10.TabIndex = 10;
             this.label10.Text = "Total Number of Duplicate Files Found";
             // 
-            // label11
+            // label4
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(223, 189);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(117, 13);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "Total Size of All Images";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(309, 142);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(117, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Total Size of All Movies";
             // 
-            // label12
+            // labelTotalMovies
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(37, 189);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(120, 13);
-            this.label12.TabIndex = 13;
-            this.label12.Text = "Total Number of Images";
+            this.labelTotalMovies.AutoSize = true;
+            this.labelTotalMovies.Location = new System.Drawing.Point(36, 142);
+            this.labelTotalMovies.Name = "labelTotalMovies";
+            this.labelTotalMovies.Size = new System.Drawing.Size(120, 13);
+            this.labelTotalMovies.TabIndex = 8;
+            this.labelTotalMovies.Text = "Total Number of Movies";
             // 
-            // label13
+            // label8
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(223, 166);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(111, 13);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "Total Size of All Music";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(309, 119);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(137, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Total Size of All Documents";
             // 
-            // label14
+            // labelTotalDocuments
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(37, 166);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(114, 13);
-            this.label14.TabIndex = 11;
-            this.label14.Text = "Total Number of Music";
+            this.labelTotalDocuments.AutoSize = true;
+            this.labelTotalDocuments.Location = new System.Drawing.Point(36, 119);
+            this.labelTotalDocuments.Name = "labelTotalDocuments";
+            this.labelTotalDocuments.Size = new System.Drawing.Size(140, 13);
+            this.labelTotalDocuments.TabIndex = 6;
+            this.labelTotalDocuments.Text = "Total Number of Documents";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(36, 75);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(189, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Total Number of Unknown Files Found";
+            // 
+            // labelFileTypes
+            // 
+            this.labelFileTypes.AutoSize = true;
+            this.labelFileTypes.Location = new System.Drawing.Point(36, 53);
+            this.labelFileTypes.Name = "labelFileTypes";
+            this.labelFileTypes.Size = new System.Drawing.Size(134, 13);
+            this.labelFileTypes.TabIndex = 4;
+            this.labelFileTypes.Text = "Total Number of File Types";
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(410, 319);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.TabIndex = 1;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(329, 319);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 0;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // DatabaseStastics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 322);
+            this.ClientSize = new System.Drawing.Size(497, 356);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DatabaseStastics";
@@ -239,22 +241,22 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelTotalNumberOfFiles;
+        private System.Windows.Forms.Label labelTotalDriveSpace;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label labelTotalImages;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label labelTotalMusic;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label labelTotalMovies;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelTotalDocuments;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelFileTypes;
     }
 }

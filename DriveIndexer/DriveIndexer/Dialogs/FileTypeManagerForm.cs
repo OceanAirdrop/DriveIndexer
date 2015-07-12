@@ -68,7 +68,7 @@ namespace DriveIndexer.Dialogs
 
             List<FileGroupData> list = DBHelper.ReadFileGroupList(true, area);
 
-            bool bAllTicked = true;
+            //bool bAllTicked = true;
 
             foreach (var fileGroup in list)
             {
@@ -76,8 +76,8 @@ namespace DriveIndexer.Dialogs
                 {
                     AddCheckBoxControl(fileType);
 
-                    if (fileType.m_includeInDriveScan == "0")
-                        bAllTicked = false;
+                    //if (fileType.m_includeInDriveScan == "0")
+                    //    bAllTicked = false;
                 }
             }
 

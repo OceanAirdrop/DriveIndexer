@@ -53,7 +53,13 @@ namespace DriveIndexer.Dialogs
 
             try
             {
-                labelDriveLabel.Text = string.Format("{0} ({1})", m_driveToIndex.UserComment, m_driveToIndex.Model);
+
+                labelDriveName.Text = string.Format("{0}", m_driveToIndex.Name);
+                labelDriveUserComment.Text = string.Format("{0}", m_driveToIndex.UserComment);
+                labelDriveModel.Text = string.Format("{0}", m_driveToIndex.Model);
+                labelDriveSize.Text = DriveInfoScanner.DriveSizeToGB(m_driveToIndex.Size);
+
+                //labelDriveLabel.Text = string.Format("{0} ({1})", m_driveToIndex.UserComment, m_driveToIndex.Model);
 
                 StartBlinkLabel();
 
@@ -260,6 +266,11 @@ namespace DriveIndexer.Dialogs
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
         {
 
         }

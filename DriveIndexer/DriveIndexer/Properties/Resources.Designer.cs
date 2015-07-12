@@ -113,6 +113,16 @@ namespace DriveIndexer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Button_Check_icon24 {
+            get {
+                object obj = ResourceManager.GetObject("Button_Check_icon24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Button_Close_icon24 {
             get {
                 object obj = ResourceManager.GetObject("Button_Close_icon24", resourceCulture);

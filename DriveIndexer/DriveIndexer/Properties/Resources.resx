@@ -190,6 +190,9 @@
   <data name="Button_Add_icon24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Button-Add-icon24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Button_Check_icon24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Button-Check-icon24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Button_Close_icon24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Button-Close-icon24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
