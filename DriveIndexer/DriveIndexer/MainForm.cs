@@ -86,17 +86,10 @@ namespace DriveIndexer
                 {
                     // this is a new drive we have not seen before! Lets get a label/description for it.
                     LabelNewDrive dlg = new LabelNewDrive(drive);
-
-                    if ( dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK )
-                    {
-                        drive.UserComment = dlg.m_userDescription;
-                    }
+                    dlg.ShowDialog();
                 }
 
             }
-
-            // Add the current drives to the sqllite database
-            //DBHelper.PopulatePhyicalDriveList(currentDrives);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -119,6 +112,9 @@ namespace DriveIndexer
                 // set this drive as the selected drive!
                 m_dgvSelectedDrive = drive;
             }
+
+            // Unselect all rows in datagridview
+            dataGridViewDrives.ClearSelection();
         }
 
         private void AddPhysicialDriveToDataGridView( DataGridView dgv, PhysicalDriveData driveData )
@@ -131,18 +127,22 @@ namespace DriveIndexer
             else
                 dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveIndexer.Properties.Resources.Button_Add_icon24;
 
+            dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Name;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.UserComment;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.SerialNumber;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Model;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.InterfaceType;
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Partitions;
-            dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.Size;
+            dgv.Rows[nNewRow].Cells[nColCount++].Value = DriveInfoScanner.DriveSizeToGB(driveData.Size);
             dgv.Rows[nNewRow].Cells[nColCount++].Value = driveData.DriveScannedDate;
 
             // Assosiate driveData with this row.
             dgv.Rows[nNewRow].Tag = driveData;
 
             dgv.Rows[nNewRow].Height = 30;
+
+            // make this RowNotInTableException readonly
+            dgv.Rows[nNewRow].ReadOnly = true;
 
         }
 
@@ -157,30 +157,25 @@ namespace DriveIndexer
                 return;
             }
 
-           if ( FileExplorer.CheckIfDriveAvailableToScan(m_dgvSelectedDrive) == false )
-           {
-               MessageBox.Show("The selected drive/usb is not available to scan");
-               return;
-           }
-
-           DialogResult dlgRes = MessageBox.Show(string.Format("Are you sure you want to scan the drive: {0} Model: {1}", m_dgvSelectedDrive.UserComment, m_dgvSelectedDrive.Model), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dlgRes == DialogResult.No)
+            SelectDrivePartition selectPartition = new SelectDrivePartition(m_dgvSelectedDrive);
+            if ( selectPartition.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                return;
+
+                IndexFilesForm dlg = new IndexFilesForm(m_dgvSelectedDrive, selectPartition.m_driveLettersToScan);
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    MessageBox.Show("Process was cancelled");
+                }
+                else
+                {
+                    DBHelper.UpdateDriveScannedStatus(m_dgvSelectedDrive);
+                    PopulateListView();
+
+                    MessageBox.Show("Scan completed successfully.");
+                }
             }
 
-            IndexFilesForm dlg = new IndexFilesForm(m_dgvSelectedDrive);
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
-            {
-                MessageBox.Show("Process was cancelled");
-            }
-            else
-            {
-                DBHelper.UpdateDriveScannedStatus(m_dgvSelectedDrive);
-                PopulateListView();
-
-                MessageBox.Show("Scan completed successfully.");
-            }
+            
         }
 
         private void dataGridViewDrives_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -192,11 +187,11 @@ namespace DriveIndexer
 
             LabelNewDrive dlg = new LabelNewDrive(data);
     
-            dlg.ShowDialog();
-            //if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    drive.UserComment = dlg.m_userDescription;
-            //}//
+            if ( dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK )
+            {
+                // user migth have changed name or drive comment. Lets repopulate the view
+                PopulateListView();
+            }
         }
 
         private void dataGridViewDrives_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -215,6 +210,8 @@ namespace DriveIndexer
 
         private void buttonFileViewer_Click(object sender, EventArgs e)
         {
+            return;
+
             FileViewer dlg = new FileViewer();
             dlg.ShowDialog();
         }

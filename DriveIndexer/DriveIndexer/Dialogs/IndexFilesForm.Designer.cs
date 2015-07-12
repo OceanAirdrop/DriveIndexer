@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IndexFilesForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelTimeElapsed = new System.Windows.Forms.Label();
             this.labelDriveLabel = new System.Windows.Forms.Label();
             this.labelCurrentDirectory = new System.Windows.Forms.Label();
             this.labelFileIndexCount = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.buttonCancel = new System.Windows.Forms.Button();
-            this.labelTimeElapsed = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -58,6 +58,31 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(379, 377);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(275, 340);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(89, 25);
+            this.buttonCancel.TabIndex = 1;
+            this.buttonCancel.Text = "Cancel Scan";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // labelTimeElapsed
+            // 
+            this.labelTimeElapsed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelTimeElapsed.AutoSize = true;
+            this.labelTimeElapsed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTimeElapsed.Location = new System.Drawing.Point(11, 344);
+            this.labelTimeElapsed.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelTimeElapsed.Name = "labelTimeElapsed";
+            this.labelTimeElapsed.Size = new System.Drawing.Size(113, 16);
+            this.labelTimeElapsed.TabIndex = 106;
+            this.labelTimeElapsed.Text = "Time Elapsed: ";
             // 
             // labelDriveLabel
             // 
@@ -65,10 +90,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDriveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDriveLabel.ForeColor = System.Drawing.Color.Black;
-            this.labelDriveLabel.Location = new System.Drawing.Point(54, 13);
+            this.labelDriveLabel.Location = new System.Drawing.Point(48, 15);
             this.labelDriveLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelDriveLabel.Name = "labelDriveLabel";
-            this.labelDriveLabel.Size = new System.Drawing.Size(310, 20);
+            this.labelDriveLabel.Size = new System.Drawing.Size(329, 20);
             this.labelDriveLabel.TabIndex = 106;
             this.labelDriveLabel.Text = "Drive Name";
             // 
@@ -111,47 +136,23 @@
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label12.Location = new System.Drawing.Point(55, 42);
+            this.label12.Location = new System.Drawing.Point(0, 42);
             this.label12.MaximumSize = new System.Drawing.Size(9800, 3);
             this.label12.MinimumSize = new System.Drawing.Size(300, 3);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(311, 3);
+            this.label12.Size = new System.Drawing.Size(379, 3);
             this.label12.TabIndex = 102;
             this.label12.Text = "111";
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::DriveIndexer.Properties.Resources.scan_drive_24;
+            this.pictureBox1.Image = global::DriveIndexer.Properties.Resources.Search_24;
             this.pictureBox1.Location = new System.Drawing.Point(10, 10);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 29);
             this.pictureBox1.TabIndex = 100;
             this.pictureBox1.TabStop = false;
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(275, 340);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(89, 25);
-            this.buttonCancel.TabIndex = 1;
-            this.buttonCancel.Text = "Cancel Scan";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // labelTimeElapsed
-            // 
-            this.labelTimeElapsed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelTimeElapsed.AutoSize = true;
-            this.labelTimeElapsed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTimeElapsed.Location = new System.Drawing.Point(11, 344);
-            this.labelTimeElapsed.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelTimeElapsed.Name = "labelTimeElapsed";
-            this.labelTimeElapsed.Size = new System.Drawing.Size(113, 16);
-            this.labelTimeElapsed.TabIndex = 106;
-            this.labelTimeElapsed.Text = "Time Elapsed: ";
             // 
             // IndexFilesForm
             // 

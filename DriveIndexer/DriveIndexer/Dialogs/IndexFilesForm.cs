@@ -19,9 +19,13 @@ namespace DriveIndexer.Dialogs
 
         private Timer m_blankTimer;
 
-        public IndexFilesForm( PhysicalDriveData drive )
+        List<string> m_driveLettersToScan = null;
+
+        public IndexFilesForm( PhysicalDriveData drive, List<string> driveLettersToScan )
         {
             m_driveToIndex = drive;
+
+            m_driveLettersToScan = driveLettersToScan;
 
             InitializeComponent();
         }
@@ -67,6 +71,22 @@ namespace DriveIndexer.Dialogs
             }
         }
 
+        DrivePartitionData GetDrivePartitionData( string driveLetter)
+        {
+            DrivePartitionData found = null;
+            foreach (var logicalDrive in m_driveToIndex.m_drivePartitions)
+            {
+                if ( logicalDrive.DeviceID == driveLetter)
+                {
+                    found = logicalDrive;
+                    break;
+                }
+
+            }
+
+            return found;
+        }
+
         void WorkerThread(object sender, DoWorkEventArgs e)
         {
             try
@@ -74,17 +94,17 @@ namespace DriveIndexer.Dialogs
                 FileExplorer.Initialise();
                 FileExplorer.InjectUserInterfaceManager(this);
 
-                foreach (var logicalDrive in m_driveToIndex.m_drivePartitions)
+                foreach (var driveLetter in m_driveLettersToScan)
                 {
                     try
                     {
+                        DrivePartitionData logicalDrive = GetDrivePartitionData(driveLetter);
                         FileExplorer.ScanDrive(logicalDrive);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
-                    
                 }
 
                 StopBlinkLabel();
@@ -237,6 +257,11 @@ namespace DriveIndexer.Dialogs
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

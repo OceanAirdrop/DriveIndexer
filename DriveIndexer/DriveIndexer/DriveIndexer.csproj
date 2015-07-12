@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ADFD3FD4-90A9-47F4-817A-970D84E45C8F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DriveIndexer</RootNamespace>
     <AssemblyName>DriveIndexer</AssemblyName>
@@ -82,6 +82,12 @@
     <Compile Include="Dialogs\AboutBoxForm.Designer.cs">
       <DependentUpon>AboutBoxForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\AddFileTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddFileTypeForm.Designer.cs">
+      <DependentUpon>AddFileTypeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\DatabaseStastics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +127,12 @@
     <Compile Include="Dialogs\LabelNewDrive.Designer.cs">
       <DependentUpon>LabelNewDrive.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SelectDrivePartition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SelectDrivePartition.Designer.cs">
+      <DependentUpon>SelectDrivePartition.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +143,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dialogs\AboutBoxForm.resx">
       <DependentUpon>AboutBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddFileTypeForm.resx">
+      <DependentUpon>AddFileTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\DatabaseStastics.resx">
       <DependentUpon>DatabaseStastics.cs</DependentUpon>
@@ -149,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LabelNewDrive.resx">
       <DependentUpon>LabelNewDrive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SelectDrivePartition.resx">
+      <DependentUpon>SelectDrivePartition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -250,6 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button-Close-icon24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

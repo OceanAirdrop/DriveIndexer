@@ -11,6 +11,12 @@ namespace DriveIndexer
     {
         const int IdenentSize = 3;
 
+        // http://stackoverflow.com/questions/9130658/map-a-diskindex-to-a-volume-label
+        public static string DriveSizeToGB(string size)
+        {
+            return Math.Round(Convert.ToDouble(size) / 1073741824, 1) + " GB";
+        }
+
         public static List<PhysicalDriveData> ScanDrives()
         {
             List<PhysicalDriveData> driveList = new List<PhysicalDriveData>();

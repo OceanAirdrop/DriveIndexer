@@ -55,18 +55,25 @@ namespace DriveIndexer
             return list;
         }
 
-
-        public static List<string> ReadWhiteListedFileTypes()
+        public static List<FileTypeData> ReadWhiteListedFileTypes()
         {
-            List<string> list = new List<string>();
+            List<FileTypeData> list = new List<FileTypeData>();
 
             try
             {
-                SQLiteCommand command = new SQLiteCommand("select FileType from FileType where IncludeInDriveScan = 1", LocalSqllite.m_sqlLiteConnection);
+                string sql = "select FileTypeId, FileGroupId, FileType, FileTypeDesc, ifnull(IncludeInDriveScan,0) as IncludeInDriveScan FROM FileType where IncludeInDriveScan = 1";
+                SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    list.Add(reader["FileType"].ToString());
+                    FileTypeData data = new FileTypeData();
+                    data.m_fileTypeId = reader["FileTypeId"].ToString();
+                    data.m_fileGroupId = reader["FileGroupId"].ToString();
+                    data.m_fileType = reader["FileType"].ToString();
+                    data.m_fileTypeDesc = reader["FileTypeDesc"].ToString();
+                    data.m_includeInDriveScan = reader["IncludeInDriveScan"].ToString();
+
+                    list.Add(data);
                 }
             }
             catch (Exception ex)
@@ -76,6 +83,27 @@ namespace DriveIndexer
 
             return list;
         }
+        
+        //public static List<string> ReadWhiteListedFileTypes()
+        //{
+        //    List<string> list = new List<string>();
+
+        //    try
+        //    {
+        //        SQLiteCommand command = new SQLiteCommand("select FileType from FileType where IncludeInDriveScan = 1", LocalSqllite.m_sqlLiteConnection);
+        //        SQLiteDataReader reader = command.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            list.Add(reader["FileType"].ToString());
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+
+        //    return list;
+        //}
 
         public static List<FileGroupData> ReadFileGroupList( bool bIncludeData, string filterOnName )
         {
@@ -148,13 +176,14 @@ namespace DriveIndexer
 
             try
             {
-                string sql = "select DriveId, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment, DriveScanned, DriveScannedDate FROM PhysicalDrives";
+                string sql = "select DriveId, Name, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment, DriveScanned, DriveScannedDate FROM PhysicalDrives";
                 SQLiteCommand command = new SQLiteCommand(sql, LocalSqllite.m_sqlLiteConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     PhysicalDriveData data = new PhysicalDriveData();
                     data.DriveId = reader["DriveId"].ToString();
+                    data.Name = reader["Name"].ToString();
                     data.SerialNumber = reader["SerialNumber"].ToString();
                     data.Manufacturer = reader["Manufacturer"].ToString();
                     data.MediaType = reader["MediaType"].ToString();
@@ -287,8 +316,9 @@ namespace DriveIndexer
                 if (driveId == "")
                 {
                     // insert statment
-                    sqlStatement.AppendLine("INSERT OR IGNORE INTO PhysicalDrives ( SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment ) VALUES ( ");
-                    sqlStatement.AppendLine(string.Format("'{0}'", data.SerialNumber));
+                    sqlStatement.AppendLine("INSERT OR IGNORE INTO PhysicalDrives ( Name, SerialNumber, Manufacturer, MediaType, Model, Partitions, Caption, InterfaceType, Size, UserComment ) VALUES ( ");
+                    sqlStatement.AppendLine(string.Format("'{0}'", data.Name));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", data.SerialNumber));
                     sqlStatement.AppendLine(string.Format(",'{0}'", data.Manufacturer));
                     sqlStatement.AppendLine(string.Format(",'{0}'", data.MediaType));
                     sqlStatement.AppendLine(string.Format(",'{0}'", data.Model));
@@ -302,17 +332,18 @@ namespace DriveIndexer
                 else
                 {
                     // update statment
-                    //sqlStatement.AppendLine("UPDATE PhysicalDrives SET ");
-                    //sqlStatement.AppendLine(string.Format("SerialNumber = '{0}'", data.SerialNumber));
-                    //sqlStatement.AppendLine(string.Format(",Manufacturer = '{0}'", data.Manufacturer));
-                    //sqlStatement.AppendLine(string.Format(",MediaType = '{0}'", data.MediaType));
-                    //sqlStatement.AppendLine(string.Format(",Model = '{0}'", data.Model));
-                    //sqlStatement.AppendLine(string.Format(",Partitions = '{0}'", data.Partitions));
-                    //sqlStatement.AppendLine(string.Format(",Caption = '{0}'", data.Caption));
-                    //sqlStatement.AppendLine(string.Format(",InterfaceType = '{0}'", data.InterfaceType));
-                    //sqlStatement.AppendLine(string.Format(",Size = '{0}'", data.Size));
-                    //sqlStatement.AppendLine(string.Format(",UserComment = '{0}'", data.UserComment));
-                    //sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", driveId));
+                    sqlStatement.AppendLine("UPDATE PhysicalDrives SET ");
+                    sqlStatement.AppendLine(string.Format("Name = '{0}'", data.Name));
+                    sqlStatement.AppendLine(string.Format(",SerialNumber = '{0}'", data.SerialNumber));
+                    sqlStatement.AppendLine(string.Format(",Manufacturer = '{0}'", data.Manufacturer));
+                    sqlStatement.AppendLine(string.Format(",MediaType = '{0}'", data.MediaType));
+                    sqlStatement.AppendLine(string.Format(",Model = '{0}'", data.Model));
+                    sqlStatement.AppendLine(string.Format(",Partitions = '{0}'", data.Partitions));
+                    sqlStatement.AppendLine(string.Format(",Caption = '{0}'", data.Caption));
+                    sqlStatement.AppendLine(string.Format(",InterfaceType = '{0}'", data.InterfaceType));
+                    sqlStatement.AppendLine(string.Format(",Size = '{0}'", data.Size));
+                    sqlStatement.AppendLine(string.Format(",UserComment = '{0}'", data.UserComment));
+                    sqlStatement.AppendLine(string.Format("WHERE DriveId = '{0}'", driveId));
                 }
             }
             catch (Exception ex)
@@ -398,7 +429,7 @@ namespace DriveIndexer
             return strBuilder.ToString();
         }
 
-        public static bool WriteFileToDatabase(DrivePartitionData data, System.IO.FileInfo fi, IFileExplorerUIManager ui)
+        public static bool WriteFileToDatabase(DrivePartitionData data, System.IO.FileInfo fi, FileTypeData extensionInfo, IFileExplorerUIManager ui)
         {
             bool bSuccessInsert = false;
 
@@ -416,17 +447,18 @@ namespace DriveIndexer
                     string hash = ""; // GetFileHash(fi.FullName);
 
                     // insert statment
-                    sqlStatement.AppendLine("INSERT OR IGNORE INTO FileIndex ( DriveId, PartitionId, FileName, FileExtension, FilePath, FileSize, FileTypeId, FileTag, FileHash, UserComment ) VALUES ( ");
+                    sqlStatement.AppendLine("INSERT OR IGNORE INTO FileIndex ( DriveId, PartitionId, FileName, FileExtension, FilePath, FileSize, FileTypeId, FileGroupId, FileTag, FileHash, UserComment ) VALUES ( ");
                     sqlStatement.AppendLine(string.Format("'{0}'", data.PhysicalDrive.DriveId));
                     sqlStatement.AppendLine(string.Format(",'{0}'", data.PartitionId));
                     sqlStatement.AppendLine(string.Format(",'{0}'", fi.Name.Replace("'","''")));
                     sqlStatement.AppendLine(string.Format(",'{0}'", fi.Extension));
                     sqlStatement.AppendLine(string.Format(",'{0}'", dirName.Replace("'", "''")));
                     sqlStatement.AppendLine(string.Format(",'{0}'", fi.Length));
-                    sqlStatement.AppendLine(string.Format(",'{0}'", "unknown type"));
-                    sqlStatement.AppendLine(string.Format(",'{0}'", "unknown tag"));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", extensionInfo.m_fileTypeId));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", extensionInfo.m_fileGroupId));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", ""));
                     sqlStatement.AppendLine(string.Format(",'{0}'", hash));
-                    sqlStatement.AppendLine(string.Format(",'{0}'", "user comment"));
+                    sqlStatement.AppendLine(string.Format(",'{0}'", ""));
                     sqlStatement.AppendLine(");");
 
                     bSuccessInsert = LocalSqllite.ExecSQLCommand(sqlStatement.ToString());
@@ -563,9 +595,6 @@ namespace DriveIndexer
                 case "Database":
                     return DefaultFileTypesDatabase.DefaultTypes();
                     break;
-                case "Web":
-                    return DefaultFileTypesWeb.DefaultTypes();
-                    break;
                 case "Compressed":
                     return DefaultFileTypesCompressed.DefaultTypes();
                     break;
@@ -576,7 +605,7 @@ namespace DriveIndexer
                     return DefaultFileTypesSystem.DefaultTypes();
                     break;
                 case "Executable":
-                    return DefaultFileTypesSystem.DefaultTypes();
+                    return DefaultFileTypesExecutable.DefaultTypes();
                     break;
 
                 default:

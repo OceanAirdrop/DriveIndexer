@@ -18,6 +18,8 @@ namespace DriveIndexer.Dialogs
 
         List<string> m_sqlToExecute = new List<string>();
 
+        string m_groupSelected = null;
+
         public FileTypeManagerForm()
         {
             InitializeComponent();
@@ -43,16 +45,20 @@ namespace DriveIndexer.Dialogs
                 m_treeSelections.Add(fileGroup.m_fileGroupName);
 
                 if (fileGroup.m_fileGroupName.ToLower() == "documents")
+                {
+                    m_groupSelected = fileGroup.m_fileGroupName;
                     AddCheckBoxes(fileGroup.m_fileGroupName);
+                }
+                    
             }
         }
 
         private void treeViewFileTypes_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            labelFileTypes.Text = string.Format("{0} File Types", e.Node.Text);
+            labelFileTypes.Text = string.Format("Whitelisted \"{0}\" File Types", e.Node.Text);
             AddCheckBoxes(e.Node.Text);
 
-
+            m_groupSelected = e.Node.Text;
            
         }
 
@@ -146,6 +152,13 @@ namespace DriveIndexer.Dialogs
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+        private void buttonAddFileType_Click(object sender, EventArgs e)
+        {
+            AddFileTypeForm dlg = new AddFileTypeForm(m_groupSelected);
+            dlg.ShowDialog();
 
         }
     }

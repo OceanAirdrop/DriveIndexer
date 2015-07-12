@@ -28,22 +28,19 @@ namespace DriveIndexer.Dialogs
             textBoxPartitions.Text = m_driveData.Partitions;
             textBoxSerial.Text = m_driveData.SerialNumber;
             textBoxType.Text = m_driveData.InterfaceType;
-            textBoxSize.Text = m_driveData.Size;
 
-            int count = 0;
-            foreach (var drivePartition in m_driveData.m_drivePartitions)
+            textBoxSize.Text = DriveInfoScanner.DriveSizeToGB(m_driveData.Size);
+
+            if ( string.IsNullOrEmpty(m_driveData.Name) == true )
             {
-                if (string.IsNullOrEmpty(drivePartition.Name) == false)
-                {
-                    if (count > 0)
-                        textBoxUserDescription.Text += " | ";
-
-                    textBoxUserDescription.Text += drivePartition.Name;
-
-                    count++;
-                }
-
+                GenerateDriveNameFromPartitionName();
             }
+            else
+            {
+                textBoxUserName.Text = m_driveData.Name;
+                textBoxUserComment.Text = m_driveData.UserComment;
+            }
+            
 
             //if (m_driveData.InterfaceType == "IDE")
             //{
@@ -62,11 +59,30 @@ namespace DriveIndexer.Dialogs
             //}
         }
 
+        private void GenerateDriveNameFromPartitionName()
+        {
+            int count = 0;
+            foreach (var drivePartition in m_driveData.m_drivePartitions)
+            {
+                if (string.IsNullOrEmpty(drivePartition.Name) == false)
+                {
+                    if (count > 0)
+                        textBoxUserName.Text += " | ";
+
+                    textBoxUserName.Text += drivePartition.Name;
+
+                    count++;
+                }
+
+            }
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            m_userDescription = textBoxUserDescription.Text;
+            m_userDescription = textBoxUserName.Text;
 
-            m_driveData.UserComment = textBoxUserDescription.Text;
+            m_driveData.Name = textBoxUserName.Text;
+            m_driveData.UserComment = textBoxUserComment.Text;
 
             DBHelper.PopulatePhyicalDrive(m_driveData);
         }

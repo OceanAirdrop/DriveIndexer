@@ -115,6 +115,7 @@ namespace OceanAirdrop
                 StringBuilder sb = new StringBuilder();
                 sb.Append("create table PhysicalDrives ( ");
                 sb.Append("DriveId integer  primary key autoincrement, ");
+                sb.Append("Name text, ");
                 sb.Append("SerialNumber text unique, ");
                 sb.Append("Manufacturer text, ");
                 sb.Append("MediaType text, ");
@@ -187,7 +188,7 @@ namespace OceanAirdrop
                 sb.Append("create table FileType ( ");
                 sb.Append("FileTypeId integer primary key autoincrement, ");
                 sb.Append("FileGroupId integer,");                      // Links to FileGroupTable
-                sb.Append("FileType text, ");                          //  .txt / .doc / etc
+                sb.Append("FileType text unique, ");                          //  .txt / .doc / etc
                 sb.Append("FileTypeDesc text,");                          //  .txt / .doc / etc
                 sb.Append("IncludeInDriveScan integer); ");                          //  .txt / .doc / etc
                 ExecSQLCommand(sb.ToString());
@@ -214,6 +215,7 @@ namespace OceanAirdrop
                 sb.Append("FilePath text, ");
                 sb.Append("FileSize numeric, ");
                 sb.Append("FileTypeId integer, ");                  // links to FileType table (pdf / txt / mp3 / etc )
+                sb.Append("FileGroupId integer, "); 
                 sb.Append("FileTag text, ");                        // User Specific Tags they can attach to a file for later searching
                 sb.Append("FileHash text, ");
                 sb.Append("UserComment text); ");                   // user comment

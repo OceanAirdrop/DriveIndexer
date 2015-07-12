@@ -1,4 +1,5 @@
-﻿using OceanAirdrop;
+﻿using DriveIndexer.Data;
+using OceanAirdrop;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +21,7 @@ namespace DriveIndexer
 
         static IFileExplorerUIManager m_uiManager = null;
 
-        static List<string> m_extensionWhiteList = new List<string>();
+        static List<FileTypeData> m_extensionWhiteList = new List<FileTypeData>();
 
         public static void Initialise()
         {
@@ -223,12 +224,19 @@ namespace DriveIndexer
         //    }
         //}
 
-        static bool IstExtensionWhiteListed( string ext )
+        static FileTypeData IstExtensionWhiteListed( string ext )
         {
-            if (m_extensionWhiteList.Contains(ext) == true)
-                return true;
+            FileTypeData found = null;
+            foreach (var fileType in m_extensionWhiteList)
+            {
+                if ( fileType.m_fileType == ext)
+                {
+                    found = fileType;
+                    break;
+                }
+            }
 
-            return false;
+            return found;
         }
 
         static void WalkDirectoryTree(System.IO.DirectoryInfo root)
@@ -272,7 +280,8 @@ namespace DriveIndexer
                             if (bCancelProcess == true)
                                 return;
 
-                            if (IstExtensionWhiteListed(fi.Extension) == false)
+                            FileTypeData includeFile = IstExtensionWhiteListed(fi.Extension);
+                            if (includeFile == null)
                             {
                                 OutputMessage(string.Format("Skipping File (Blacklisted): {0}", fi.Name));
                                 continue;
@@ -282,7 +291,7 @@ namespace DriveIndexer
                             //var x = m_logicalDrive.Name;
                             //OutputMessage(string.Format("file: {0}", fi.FullName));
 
-                            if (DBHelper.WriteFileToDatabase(m_logicalDrive, fi, m_uiManager) == true)
+                            if (DBHelper.WriteFileToDatabase(m_logicalDrive, fi, includeFile, m_uiManager) == true)
                             {
                                 m_indexedFileCount++;
                                 m_uiManager.OutputFileIndexCount(m_indexedFileCount);

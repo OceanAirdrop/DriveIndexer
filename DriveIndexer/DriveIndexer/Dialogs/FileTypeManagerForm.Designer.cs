@@ -182,6 +182,7 @@
             this.buttonAddFileType.Text = "Add FileType";
             this.buttonAddFileType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonAddFileType.UseVisualStyleBackColor = true;
+            this.buttonAddFileType.Click += new System.EventHandler(this.buttonAddFileType_Click);
             // 
             // buttonDeleteFileGroup
             // 

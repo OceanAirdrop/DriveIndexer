@@ -9,6 +9,7 @@ namespace DriveIndexer
     public class PhysicalDriveData
     {
         public string DriveId { get; set; }             // id
+        public string Name { get; set; }                // Hitachi HTS725032A9A364
         public string Caption { get; set; }             // Hitachi HTS725032A9A364
         public string InterfaceType { get; set; }       // IDE
         public string Manufacturer { get; set; }        // (Standard disk drives)
